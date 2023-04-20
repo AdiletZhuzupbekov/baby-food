@@ -1,65 +1,221 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-  <title>Bootstrap 5 Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Bootstrap 5 Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
 <div class="container-fluid p-5 text-center">
-  <h1>[[${pageName}]]</h1>
-  <p>Thymeleaf and Bootstrap 5</p>
+    <h1>[[${pageName}]]</h1>
+    <p>Thymeleaf and Bootstrap 5</p>
 </div>
 <div class="container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="product-crud">Добавить товар</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-      </ul>
+    <div th:insert="part/navbar.html :: navigation"></div>
+    <div class="mt-3">
+        <form action="/filter" method="get">
+            <input type="text" name="filter" id="filter" placeholder="bar code">
+            <button type="submit" class="btn btn-secondary">Найти</button>
+        </form>
     </div>
-  </nav>
-  <div class="mt-3">
-    <form action="/add-product" method="post">
-      <input class="form-control mt-2" type="text" id="barCode" name="barCode" placeholder="Бар код">
-      <input class="form-control mt-2" type="text" id="name" name="name" placeholder="название">
-      <input class="form-control mt-2" type="text" id="nameRus" name="nameRus" placeholder="название рус">
-      <input class="form-control mt-2" type="text" id="description" name="description" placeholder="описание">
-      <input class="form-control mt-2" type="text" id="size" name="size" placeholder="размер">
-      <input class="form-control mt-2" type="text" id="price" name="price" placeholder="цена">
-      <input class="form-control mt-2" type="text" id="type" name="type" placeholder="тип">
-      <input class="form-control mt-2" type="text" id="image" name="image" placeholder="фото">
-      <button class="btn btn-success mt-2" type="submit" id="addToTable">Добавить в список</button>
-    </form>
-  </div>
+    <div class="mt-3" style="width: 600px" th:if="${product != null}">
+        <h2>Найдено в базе</h2>
+        <form action="/product/add" method="post" enctype="multipart/form-data"
+              th:each="p :${product}">
+            <div class="row g-3 align-items-center">
+                <input type="hidden" name="id" th:value="${p.id}">
+                <input type="hidden" name="type" th:value="${p.category}">
+                <input type="hidden" name="description" th:value="${p.description}">
+                <div class="col align-self-start">
+                    <label for="barCode" class="col-form-label" style="width: 150px">Bar code:</label>
+                </div>
+                <div class="col align-self-end">
+                    <input class="form-control mt-2" readonly style="width: 300px" type="text" width="200px" id="barCode"
+                           name="barCode" placeholder="Бар код"
+                           th:value="${p.barCode}">
+                </div>
+                <div class="col align-self-start">
+                    <label for="name" class="col-form-label" style="width: 150px">Hазвание:</label>
+                </div>
+                <div class="col align-self-end">
+                    <input class="form-control mt-2" style="width: 300px" type="text" id="name" name="name"
+                           placeholder="название" th:value="${p.name}">
+                </div>
+                <div class="col-auto">
+                    <label for="barCode" class="col-form-label" style="width: 283px">Hазвание на русском:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2" style="width: 300px" type="text" id="nameRus" name="nameRus"
+                           placeholder="название рус" th:value="${p.nameRus}">
+                </div>
+                <div class="col-auto">
+                    <label for="size" class="col-form-label" style="width: 283px">Размер:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2" readonly style="width: 300px" type="text" id="size" name="size"
+                           placeholder="размер"
+                           th:value="${p.size}">
+                </div>
+
+                <div class="col-auto">
+                    <label for="price" class="col-form-label" style="width: 283px">Цена:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2"  style="width: 300px" type="text" id="price" name="price"
+                           placeholder="цена продажи" th:value="${p.price}">
+                </div>
+                <div class="col-auto">
+                    <label for="price" class="col-form-label" style="width: 283px">Цена:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2"  style="width: 300px" type="text" id="originPrice" name="originPrice"
+                           placeholder="цена прихода" th:value="${p.originalPrice}">
+                </div>
+                <div class="col-auto">
+                    <label for="count" class="col-form-label" style="width: 283px">Kолличество:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2" readonly style="width: 300px" type="number" id="count" name="count"
+                           placeholder="колличество"
+                           th:value="${p.count}">
+                </div>
+                <div class="col-auto">
+                    <label for="plus" class="col-form-label" style="width: 283px">Добавить:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2" style="width: 300px" type="text" id="plus" name="plus"
+                           placeholder="сколько хотите добавить?">
+                </div>
+
+            </div>
+            <button class="btn btn-success mt-2" type="submit" id="addToTable">Добавить в список</button>
+        </form>
+    </div>
+    <div class="mt-3" style="width: 600px" th:if="${product == null}">
+        <h2>Новый товар</h2>
+        <form action="/product/add" method="post" enctype="multipart/form-data">
+            <div class="row g-3 align-items-center">
+                <input type="hidden" name="id">
+                <div class="col align-self-start">
+                    <label for="barCode" class="col-form-label" style="width: 150px">Bar code:</label>
+                </div>
+                <div class="col align-self-end">
+                    <input class="form-control mt-2" style="width: 300px" type="text" width="200px" id="newBarCode"
+                           name="barCode" placeholder="Бар код" th:value="${code}">
+                </div>
+                <div class="col align-self-start">
+                    <label for="name" class="col-form-label" style="width: 150px">Hазвание:</label>
+                </div>
+                <div class="col align-self-end">
+                    <input class="form-control mt-2" style="width: 300px" type="text" id="name" name="name"
+                           placeholder="название">
+                </div>
+                <div class="col-auto">
+                    <label for="barCode" class="col-form-label" style="width: 283px">Hазвание на русском:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2" style="width: 300px" type="text" id="nameRus" name="nameRus"
+                           placeholder="название рус">
+                </div>
+                <div class="col-auto">
+                    <label for="description" class="col-form-label" style="width: 283px">Oписание:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2" style="width: 300px" type="text" id="description"
+                           name="description" placeholder="описание">
+                </div>
+                <div class="col-auto">
+                    <label for="size" class="col-form-label" style="width: 283px">Размер:</label>
+                </div>
+                <div class="col-auto">
+                    <select class="form-select" id="size" name="size" aria-label="Default select example">
+                        <option selected value="">Выберите размер</option>
+                        <option value="0 размер">0 размер</option>
+                        <option value="1 размер">1 размер</option>
+                        <option value="2 размер">2 размер</option>
+                        <option value="3 размер">3 размер</option>
+                        <option value="4 размер">4 размер</option>
+                        <option value="5 размер">5 размер</option>
+                        <option value="6 размер">6 размер</option>
+                        <option value="7 размер">7 размер</option>
+                        <option value="меньше шт">меньше шт</option>
+                        <option value="100 шт">100 шт</option>
+                        <option value="больше шт">больше шт</option>
+                        <option value="разное">разное</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label for="age" class="col-form-label" style="width: 283px">Возраст:</label>
+                </div>
+                <div class="col-auto">
+                    <select class="form-select" id="age" name="age" aria-label="Default select example">
+                        <option selected value="">Выберите возраст</option>
+                        <option value="1(с рождения)">1(с рождения)</option>
+                        <option value="2(с 6 месяцев)">2(с 6 месяцев)</option>
+                        <option value="3(с 12 месяцев)">3(с 12 месяцев)</option>
+                        <option value="4(с 18 месяцев)">4(с 18 месяцев)</option>
+                        <option value="с 4 месяцев">с 4 месяцев</option>
+                        <option value="с 5 месяцев">с 5 месяцев</option>
+                        <option value="с 6 месяцев">с 6 месяцев</option>
+                        <option value="с 7 месяцев">с 7 месяцев</option>
+                        <option value="с 8 месяцев">с 8 месяцев</option>
+                        <option value="с 1 года">с 1 года</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label for="originPrice" class="col-form-label" style="width: 283px">Цена приходная:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2" style="width: 300px" type="text" id="originPrice" name="originPrice"
+                           placeholder="цена приходная">
+                </div>
+
+                <div class="col-auto">
+                    <label for="description" class="col-form-label" style="width: 283px">Цена продажная:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2" style="width: 300px" type="text" id="price" name="price"
+                           placeholder="цена продажная">
+                </div>
+                <div class="col-auto">
+                    <label for="category" class="col-form-label" style="width: 283px">Категория:</label>
+                </div>
+                <div class="col-auto">
+                    <div class="col-auto">
+                        <select class="form-select" id="category" name="category">
+                            <option selected value="">Выберите категорию</option>
+                            <option value="Молочные смеси">Молочные смеси</option>
+                            <option value="Каши">Каши</option>
+                            <option value="Пюре">Пюре</option>
+                            <option value="Соки, компоты, морсы и вода">Соки, компоты, морсы и вода</option>
+                            <option value="Печенье">Печенье</option>
+                            <option value="Подгузники">Подгузники</option>
+                            <option value="Трусики">Трусики</option>
+                            <option value="Чай">Чай</option>
+                            <option value="Влажные салфетки">Влажные салфетки</option>
+                            <option value="Гигиена и уход">Гигиена и уход</option>
+                            <option value="Для кормления">Для кормления</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <label for="description" class="col-form-label" style="width: 283px">Kолличество:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2" style="width: 300px" type="number" id="count" name="count"
+                           placeholder="колличество">
+                </div>
+
+            </div>
+
+            <label for="image">Photos: </label>
+            <input type="file" name="image" id="image" accept="image/png, image/jpeg">
+            <button class="btn btn-success mt-2" type="submit" id="addToTable">Добавить в список</button>
+        </form>
+    </div>
 </div>
-
-
 </body>
 </html>
