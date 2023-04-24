@@ -35,10 +35,6 @@ public class MainRestController {
         return productEntities;
     }
 
-//    @PostMapping("/product/order")
-//    public void makeOrder(@RequestBody List<Product> products){
-//        productService.makeOrder(products);
-//    }
 
 
 }
