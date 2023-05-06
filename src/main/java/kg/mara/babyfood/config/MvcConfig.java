@@ -14,6 +14,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         exposeDirectory("product-photos", registry);
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 
     private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
@@ -22,8 +23,9 @@ public class MvcConfig implements WebMvcConfigurer {
 
         if (dirName.startsWith("../")) dirName = dirName.replace("../", "");
 
-        registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/"+ uploadPath + "/");
+        registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/" + uploadPath + "/");
     }
+
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/product/**").setViewName("product");
         registry.addViewController("/products/**").setViewName("products");

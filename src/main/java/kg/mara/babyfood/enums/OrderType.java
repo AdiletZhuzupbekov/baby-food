@@ -1,5 +1,5 @@
 package kg.mara.babyfood.enums;
 
 public enum OrderType {
-    IN_PROCESS, REFUND, CLOSED;
+    НОВЫЙ, ДОСТАВКА, ЗАВЕРШЕН, ОТМЕНЕН
 }

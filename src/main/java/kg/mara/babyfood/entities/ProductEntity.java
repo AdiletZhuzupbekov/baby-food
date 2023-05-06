@@ -4,10 +4,11 @@ package kg.mara.babyfood.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
-public class ProductEntity {
+public class ProductEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

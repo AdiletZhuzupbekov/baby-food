@@ -17,5 +17,8 @@ public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
 
     ProductEntity findByBarCode(String filter);
 
-    List<ProductEntity> findTop10ByOrderByIdDesc();
+    List<ProductEntity> findTop20ByOrderByIdDesc();
+
+    List<ProductEntity> findByIdIn(List<Long> ids);
 }
+

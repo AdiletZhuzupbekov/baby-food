@@ -34,4 +34,12 @@ public class UserService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
+
+    public List<User> getDrivers() {
+        return userRepo.findAllByRoles(Role.DRIVER);
+    }
+
+    public User getUserByLogin(String driver) {
+        return userRepo.findByUsername(driver);
+    }
 }

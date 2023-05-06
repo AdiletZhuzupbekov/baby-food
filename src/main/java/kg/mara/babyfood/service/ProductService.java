@@ -14,7 +14,5 @@ public interface ProductService {
 
     Product findByFilter(String filter);
 
-    void makeOrder(List<Product> products);
-
     List<ProductEntity> getProductsForPanel();
 }

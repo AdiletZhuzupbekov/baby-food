@@ -1,6 +1,11 @@
 <div th:fragment="navigation" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <div class="container-fluid p-5 text-center">
+    <h1>Baby Food</h1>
+    <p>админ панель</p>
+    <h5 sec:authentication="name"></h5>
+  </div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Главная</a>
+    <a class="navbar-brand " href="/">Главная</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,7 +19,10 @@
           <a class="nav-link" href="#">Отчеты</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/product/order">Заказы</a>
+          <a class="nav-link" href="/product/order">Новые заказы</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/product/order"></a>
         </li>
         <div sec:authorize="hasAuthority('ADMIN')">
           <li class="nav-item">
