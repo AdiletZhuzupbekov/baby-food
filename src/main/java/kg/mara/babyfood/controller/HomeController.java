@@ -2,10 +2,10 @@ package kg.mara.babyfood.controller;
 
 import kg.mara.babyfood.entities.ProductEntity;
 import kg.mara.babyfood.model.Product;
+import kg.mara.babyfood.service.ExcelService;
 import kg.mara.babyfood.service.FileUploadUtil;
 import kg.mara.babyfood.service.ProductService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
     private final ProductService productService;
+    private final ExcelService excelService;
 
-    public HomeController(ProductService productService) {
-        this.productService = productService;
-    }
     @GetMapping("/")
     public String mainPage(Model model){
         List<ProductEntity> products = productService.getProductsForPanel();
@@ -95,5 +95,9 @@ public class HomeController {
         String uploadDir = "product-photos";
         FileUploadUtil.saveFile(uploadDir,fileName,multipartFile);
         return "redirect:/product-crud";
+    }
+    @GetMapping("/revision")
+    public void export(HttpServletResponse response) throws IOException {
+        excelService.revisionToExcel(response);
     }
 }

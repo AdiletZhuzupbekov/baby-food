@@ -51,4 +51,9 @@ public class ProductServiceImpl implements ProductService {
         return productDao.findTop20ByOrderByIdDesc();
     }
 
+    @Override
+    public List<ProductEntity> findAll() {
+        return productDao.findAll();
+    }
+
 }

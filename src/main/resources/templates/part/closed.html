@@ -1,0 +1,73 @@
+<div th:fragment="closed">
+  <section id="closed-order" style="display: none">
+    <h3>Заверщенные</h3>
+    <div>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">Номер заказа</th>
+          <th scope="col">Доставщик</th>
+          <th scope="col">Адрес</th>
+          <th scope="col">Дата</th>
+          <th scope="col">Статус</th>
+          <th scope="col">Общая цена</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${closed}">
+          <th th:text = ${order.orderId}></th>
+          <th th:text = ${order.driver}></th>
+          <td th:text = ${order.address}></td>
+          <td th:text = ${{order.orderDt}}></td>
+          <td th:text = ${order.orderType}></td>
+          <td th:text = ${order.totalPrice}></td>
+          <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-row="${order}"
+                      th:data-bs-target="${'#modalCustom' + order.orderId}">
+            открыть
+          </button>
+            <!-- Modal -->
+            <div class="modal fade m" th:id="modalCustom + ${order.orderId}" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" >
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="row">
+                        <h5 class="modal-title" id="exampleModalLabel">Номер заказа</h5>
+                        <h7 th:text ="'№'+ ${order.orderId}"></h7>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                      <table class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th scope="col">Название</th>
+                          <th scope="col">колличество</th>
+                          <th scope="col">цена за штуку</th>
+                          <th scope="col">общая цена</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product : ${order.reservedProducts}">
+                          <th th:text = ${product.name}></th>
+                          <th th:text = ${product.count}></th>
+                          <th th:text = "${product.price}">сом</th>
+                          <th id="price" th:text = "${product.price * product.count}">сом</th>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <h5></h5>
+                      <h5 th:text ="'Стоимость заказа:'+' '+${order.totalPrice}"></h5>
+                      <h4 th:text="'Курьер: '+${order.driver}"></h4>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

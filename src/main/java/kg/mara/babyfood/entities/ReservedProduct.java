@@ -18,5 +18,6 @@ public class ReservedProduct {
     private String name;
     private String size;
     private String barcode;
+    private Double price;
 
 }

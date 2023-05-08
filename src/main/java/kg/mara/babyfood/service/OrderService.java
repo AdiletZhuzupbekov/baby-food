@@ -13,4 +13,12 @@ public interface OrderService {
     void saveOrder(OrderEntity order);
 
     OrderEntity getOrder(Long order);
+
+    List<OrderEntity> getOrdersInProcess();
+
+    void cancelOrder(Long orderId);
+
+    List<OrderEntity> getOrdersClosed();
+
+    void closeOrder(Long orderId, List<String> barcode, List<Integer> counts);
 }

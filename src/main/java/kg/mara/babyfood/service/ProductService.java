@@ -15,4 +15,6 @@ public interface ProductService {
     Product findByFilter(String filter);
 
     List<ProductEntity> getProductsForPanel();
+
+    List<ProductEntity> findAll();
 }

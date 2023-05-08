@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface OrderDao extends JpaRepository<OrderEntity, Long> {
 
-    @Query("SELECT o FROM OrderEntity o WHERE o.orderType ='НОВЫЙ' ")
-    List<OrderEntity> findByOrderType();
+    @Query("SELECT o FROM OrderEntity o WHERE o.orderType in ?1")
+    List<OrderEntity> findByOrderType(List<OrderType> orderTypes);
 }

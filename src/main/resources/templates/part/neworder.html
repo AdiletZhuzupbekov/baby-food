@@ -1,0 +1,89 @@
+<div th:fragment="neworder">
+  <section id="new-order">
+    <h3>Новые заказы</h3>
+    <div>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">Номер заказа</th>
+          <th scope="col">Адрес</th>
+          <th scope="col">Дата</th>
+          <th scope="col">Статус</th>
+          <th scope="col">Общая цена</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+          <th th:text = ${order.orderId}></th>
+          <td th:text = ${order.address}></td>
+          <td th:text = ${{order.orderDt}}></td>
+          <td th:text = ${order.orderType}></td>
+          <td th:text = ${order.totalPrice}></td>
+          <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-row="${order}"
+                      th:data-bs-target="${'#modalCustom' + order.orderId}">
+            Назначить
+          </button>
+            <!-- Modal -->
+            <div class="modal fade m" th:id="modalCustom + ${order.orderId}" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" >
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <form action="/chooseDriver" method="post">
+                    <div class="modal-header">
+                      <div class="row">
+                        <h5 class="modal-title" id="exampleModalLabel">Номер заказа</h5>
+                        <h7 th:text ="'№'+ ${order.orderId}"></h7>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                      <table class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th scope="col">Название</th>
+                          <th scope="col">баркод</th>
+                          <th scope="col">колличество</th>
+                          <th scope="col">цена</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product : ${order.reservedProducts}">
+                          <th th:text = ${product.name}></th>
+                          <th th:text = ${product.barcode}></th>
+                          <th th:text = "${product.count} + 'шт'"></th>
+                          <th th:text = "${product.price * product.count}"></th>
+
+                        </tr>
+                        </tbody>
+                      </table>
+                      <h5></h5>
+                      <h5 th:text ="'Стоимость заказа:'+' '+${order.totalPrice}"></h5>
+                      <input type="hidden" name="orderId" th:value="${order.id}">
+                      <div class="form-group blu-margin" style="width: 300px">
+                        <select class="form-control" name="driver"  required id="driver">
+                          <option value="не назначен">выбрать доставщика</option>
+                          <option th:each="driver : ${drivers}" th:value="${driver.username}" th:text="${driver.username}"></option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <a th:href="@{/export/{orderId}(orderId=${order.id})}">Выгрузить накладную</a>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                      <button type="submit" class="btn btn-primary">Назначить</button>
+                    </div>
+                  </form>
+                  <div class="modal-footer">
+                    <form action="/cancel-order" method="post">
+                      <input type="hidden" name="orderId" th:value="${order.id}">
+                      <button type="submit" class="btn btn-danger">Отменить Заказ</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
