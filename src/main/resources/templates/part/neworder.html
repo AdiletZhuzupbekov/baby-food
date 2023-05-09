@@ -15,7 +15,7 @@
         <tbody>
         <tr th:each="order : ${orders}">
           <th th:text = ${order.orderId}></th>
-          <td th:text = ${order.address}></td>
+          <td th:text = ${order.address} style="width: 150px"></td>
           <td th:text = ${{order.orderDt}}></td>
           <td th:text = ${order.orderType}></td>
           <td th:text = ${order.totalPrice}></td>
@@ -42,7 +42,8 @@
                           <th scope="col">Название</th>
                           <th scope="col">баркод</th>
                           <th scope="col">колличество</th>
-                          <th scope="col">цена</th>
+                          <th scope="col">цена за ед</th>
+                          <th scope="col">общая цена</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,8 +51,8 @@
                           <th th:text = ${product.name}></th>
                           <th th:text = ${product.barcode}></th>
                           <th th:text = "${product.count} + 'шт'"></th>
+                          <th th:text = "${product.price}"></th>
                           <th th:text = "${product.price * product.count}"></th>
-
                         </tr>
                         </tbody>
                       </table>

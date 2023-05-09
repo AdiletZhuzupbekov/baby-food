@@ -10,15 +10,9 @@ import kg.mara.babyfood.enums.OrderType;
 import kg.mara.babyfood.model.Product;
 import kg.mara.babyfood.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,16 +102,37 @@ public class OrderServiceImpl implements OrderService {
     public void closeOrder(Long orderId, List<String> barcode, List<Integer> counts) {
         OrderEntity orderEntity = orderDao.getById(orderId);
         List<ReservedProduct> rp = orderEntity.getReservedProducts();
+        Double total = 0.0;
         for (int i = 0; i < barcode.size(); i ++){
             ProductEntity pe = productDao.findByBarCode(barcode.get(i));
             pe.setCount(pe.getCount() + (rp.get(i).getCount() - counts.get(i)));
             rp.get(i).setCount(counts.get(i));
+            total += rp.get(i).getPrice() * rp.get(i).getCount();
             productDao.save(pe);
         }
         orderEntity.setOrderType(OrderType.ЗАВЕРШЕН);
         orderEntity.setReservedProducts(rp);
+        orderEntity.setTotalPrice(total);
         orderDao.save(orderEntity);
 
     }
+
+    @Override
+    public List<OrderEntity> getOrderByDeliver(LocalDateTime start, LocalDateTime end, String driver) {
+        List<OrderEntity> orderEntities;
+        if (start == null){
+            start = LocalDateTime.now().minusMonths(3);
+        }
+        if (end == null){
+            end = LocalDateTime.now();
+        }
+        if (driver.isEmpty()){
+            orderEntities = orderDao.findByDate(start, end, OrderType.ЗАВЕРШЕН);
+        }else {
+            orderEntities = orderDao.findByDateAndDriver(start, end, OrderType.ЗАВЕРШЕН, driver);
+        }
+        return orderEntities;
+    }
+
 
 }

@@ -3,6 +3,7 @@ package kg.mara.babyfood.service;
 import kg.mara.babyfood.entities.OrderEntity;
 import kg.mara.babyfood.model.Product;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OrderService {
@@ -21,4 +22,6 @@ public interface OrderService {
     List<OrderEntity> getOrdersClosed();
 
     void closeOrder(Long orderId, List<String> barcode, List<Integer> counts);
+
+    List<OrderEntity> getOrderByDeliver(LocalDateTime start, LocalDateTime end, String driver);
 }

@@ -7,6 +7,7 @@ import kg.mara.babyfood.service.ExcelService;
 import kg.mara.babyfood.service.OrderService;
 import kg.mara.babyfood.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequiredArgsConstructor
@@ -65,5 +71,32 @@ public class OrderController {
     public void export(@PathVariable Long orderId, HttpServletResponse response) throws IOException {
         OrderEntity orderEntity = orderService.getOrder(orderId);
         excelService.exportToExcel(orderEntity, response);
+    }
+    @GetMapping("/deliver")
+    public String getOrderByDeliver(
+            @RequestParam(name = "start", required = false) String start,
+            @RequestParam(name = "end", required = false) String end,
+            @RequestParam(required = false) String driver,
+            Model model){
+        LocalDateTime startDt = null;
+        LocalDateTime endDt = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        if (start != null){
+            startDt = LocalDateTime.parse(start, formatter);
+        }
+        if (end != null){
+            endDt = LocalDateTime.parse(end, formatter);
+        }
+
+        List<OrderEntity> closed;
+        List<User> drivers = userService.getDrivers();
+        if (driver == null){
+            closed = orderService.getOrdersClosed();
+        }else {
+            closed = orderService.getOrderByDeliver(startDt, endDt, driver);
+        }
+        model.addAttribute("deliver", closed);
+        model.addAttribute("drivers", drivers);
+        return "deliver";
     }
 }

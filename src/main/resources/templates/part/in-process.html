@@ -15,7 +15,7 @@
         <tbody>
         <tr th:each="order : ${delivering}">
           <th th:text = ${order.orderId}></th>
-          <td th:text = ${order.address}></td>
+          <td th:text = ${order.address} style="width: 150px"></td>
           <td th:text = ${{order.orderDt}}></td>
           <td th:text = ${order.orderType}></td>
           <td th:text = ${order.totalPrice}></td>
@@ -64,8 +64,9 @@
                       <h4 th:text="'Курьер: '+${order.driver}"></h4>
                     </div>
                     <div class="modal-footer">
+                      <a th:href="@{/export/{orderId}(orderId=${order.id})}">Выгрузить накладную</a>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                      <button type="submit" class="btn btn-success">Закрыть</button>
+                      <button type="submit" class="btn btn-success">Провести</button>
                     </div>
                   </form>
                   <div class="modal-footer">

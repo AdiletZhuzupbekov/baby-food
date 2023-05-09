@@ -17,11 +17,11 @@
         <tr th:each="order : ${closed}">
           <th th:text = ${order.orderId}></th>
           <th th:text = ${order.driver}></th>
-          <td th:text = ${order.address}></td>
+          <td th:text = ${order.address} style="width: 150px"></td>
           <td th:text = ${{order.orderDt}}></td>
           <td th:text = ${order.orderType}></td>
           <td th:text = ${order.totalPrice}></td>
-          <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-row="${order}"
+          <td><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-row="${order}"
                       th:data-bs-target="${'#modalCustom' + order.orderId}">
             открыть
           </button>
