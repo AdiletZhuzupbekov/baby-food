@@ -12,7 +12,6 @@ import kg.mara.babyfood.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
             rp.setBarcode(pe.getBarCode());
             rp.setName(pe.getName());
             rp.setPrice(pe.getPrice());
+            rp.setOriginalPrice(pe.getOriginalPrice());
             reservedProductDao.save(rp);
             reservedProducts.add(rp);
         }
@@ -134,5 +134,15 @@ public class OrderServiceImpl implements OrderService {
         return orderEntities;
     }
 
-
+    @Override
+    public Double getByDt(LocalDateTime startDt, LocalDateTime endDt) {
+        List<OrderEntity> orderEntities = orderDao.findByDate(startDt, endDt, OrderType.ЗАВЕРШЕН);
+        double total = 0.0;
+        for (OrderEntity o : orderEntities){
+            for (ReservedProduct rp : o.getReservedProducts()){
+                total += (rp.getPrice() * rp.getCount())-(rp.getOriginalPrice() * rp.getCount());
+            }
+        }
+        return total;
+    }
 }

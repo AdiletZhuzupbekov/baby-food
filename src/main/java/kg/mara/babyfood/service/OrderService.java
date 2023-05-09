@@ -24,4 +24,6 @@ public interface OrderService {
     void closeOrder(Long orderId, List<String> barcode, List<Integer> counts);
 
     List<OrderEntity> getOrderByDeliver(LocalDateTime start, LocalDateTime end, String driver);
+
+    Double getByDt(LocalDateTime startDt, LocalDateTime endDt);
 }

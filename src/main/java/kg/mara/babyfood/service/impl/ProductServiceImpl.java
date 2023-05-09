@@ -2,6 +2,7 @@ package kg.mara.babyfood.service.impl;
 
 import kg.mara.babyfood.dao.OrderDao;
 import kg.mara.babyfood.dao.ProductDao;
+import kg.mara.babyfood.entities.OrderEntity;
 import kg.mara.babyfood.entities.ProductEntity;
 import kg.mara.babyfood.mapper.ProductMapper;
 import kg.mara.babyfood.model.Product;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -55,5 +57,26 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> findAll() {
         return productDao.findAll();
     }
+
+    @Override
+    public Double getBaseTotal() {
+        Double total = 0.0;
+        List<ProductEntity> productEntities = productDao.findAll();
+        for (ProductEntity pe : productEntities){
+            total += pe.getOriginalPrice() * pe.getCount();
+        }
+        return total;
+    }
+
+    @Override
+    public Double getSellTotal() {
+        Double total = 0.0;
+        List<ProductEntity> productEntities = productDao.findAll();
+        for (ProductEntity pe : productEntities){
+            total += pe.getPrice() * pe.getCount();
+        }
+        return total;
+    }
+
 
 }

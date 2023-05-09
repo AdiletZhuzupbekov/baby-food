@@ -57,19 +57,21 @@
                 </div>
 
                 <div class="col-auto">
-                    <label for="price" class="col-form-label" style="width: 283px">Цена:</label>
-                </div>
-                <div class="col-auto">
-                    <input class="form-control mt-2"  style="width: 300px" type="text" id="price" name="price"
-                           placeholder="цена продажи" th:value="${p.price}">
-                </div>
-                <div class="col-auto">
-                    <label for="price" class="col-form-label" style="width: 283px">Цена:</label>
+                    <label for="price" class="col-form-label" style="width: 283px">Цена приходная:</label>
                 </div>
                 <div class="col-auto">
                     <input class="form-control mt-2"  style="width: 300px" type="text" id="originPrice" name="originPrice"
                            placeholder="цена прихода" th:value="${p.originalPrice}">
                 </div>
+
+                <div class="col-auto">
+                    <label for="price" class="col-form-label" style="width: 283px">Цена продажи:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mt-2"  style="width: 300px" type="text" id="price" name="price"
+                           placeholder="цена продажи" th:value="${p.price}">
+                </div>
+
                 <div class="col-auto">
                     <label for="count" class="col-form-label" style="width: 283px">Kолличество:</label>
                 </div>

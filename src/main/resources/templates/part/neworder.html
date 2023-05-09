@@ -15,7 +15,7 @@
         <tbody>
         <tr th:each="order : ${orders}">
           <th th:text = ${order.orderId}></th>
-          <td th:text = ${order.address} style="width: 150px"></td>
+          <td th:text = ${order.address} style="width: 200px"></td>
           <td th:text = ${{order.orderDt}}></td>
           <td th:text = ${order.orderType}></td>
           <td th:text = ${order.totalPrice}></td>
