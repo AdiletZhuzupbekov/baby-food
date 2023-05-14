@@ -33,10 +33,19 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductEntity saveProducts(Product products) {
-         ProductEntity pe = productMapper.toEntity(products);
-            productDao.save(pe);
-            return  pe;
+    public ProductEntity saveProducts(Product product) {
+         ProductEntity pe = productDao.findByBarCode(product.getBarCode());
+         pe.setName(product.getName());
+         pe.setNameRus(product.getNameRus());
+         pe.setDescription(product.getDescription());
+         pe.setCount(product.getCount());
+         pe.setPrice(product.getPrice());
+         pe.setOriginalPrice(product.getOriginalPrice());
+         pe.setSize(product.getSize());
+         pe.setAge(product.getAge());
+         pe.setCategory(product.getCategory());
+         productDao.save(pe);
+         return  pe;
     }
 
     @Override

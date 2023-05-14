@@ -63,37 +63,37 @@ public class HomeController {
                              @RequestParam(required = false) Integer plus,
                              @RequestParam(value = "image", required = false)MultipartFile multipartFile
                              ) throws IOException {
-        String fileName = null;
-        if (multipartFile != null) {
-             fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        }
-        Product product = new Product();
-        if (id != null){
-            product.setId(id);
-        }
-        if (!age.equals(""))
-        product.setAge(age);
-        product.setOriginalPrice(originPrice);
-        if (!category.equals(""))
-        product.setCategory(category);
-        product.setPrice(price);
-        if (!size.equals(""))
-        product.setSize(size);
-        product.setDescription(description);
-        product.setName(name);
-        product.setNameRus(nameRus);
-        if (fileName != null) {
-            product.setImage(fileName);
-        }
-        product.setBarCode(barCode);
-        if (plus != null){
-            product.setCount(count+plus);
-        }else {
-            product.setCount(count);
-        }
+            String fileName = null;
+            if (multipartFile != null) {
+                fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            }
+            String uploadDir = "product-photos";
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            Product product = new Product();
+            if (id != null) {
+                product.setId(id);
+            }
+            if (age != null)
+                product.setAge(age);
+            product.setOriginalPrice(originPrice);
+            if (category != null)
+                product.setCategory(category);
+            product.setPrice(price);
+            if (size != null)
+                product.setSize(size);
+            product.setDescription(description);
+            product.setName(name);
+            product.setNameRus(nameRus);
+            if (fileName != null) {
+                product.setImage(fileName);
+            }
+            product.setBarCode(barCode);
+            if (plus != null) {
+                product.setCount(count + plus);
+            } else {
+                product.setCount(count);
+            }
         productService.saveProducts(product);
-        String uploadDir = "product-photos";
-        FileUploadUtil.saveFile(uploadDir,fileName,multipartFile);
         return "redirect:/product-crud";
     }
     @GetMapping("/revision")
