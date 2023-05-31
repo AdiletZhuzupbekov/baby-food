@@ -19,7 +19,7 @@
           <td th:text = ${{order.orderDt}}></td>
           <td th:text = ${order.orderType}></td>
           <td th:text = ${order.totalPrice}></td>
-          <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-row="${order}"
+          <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-row="${order}"
                       th:data-bs-target="${'#modalCustom' + order.orderId}">
             Завершить
           </button>
@@ -60,6 +60,8 @@
                       </table>
                       <h5></h5>
                       <h5 th:text ="'Стоимость заказа:'+' '+${order.totalPrice}"></h5>
+                      <h5 th:text ="'Имя:'+' '+${order.name}"></h5>
+                      <h5 th:text ="'Адрес:'+' '+${order.address}"></h5>
                       <input type="hidden" name="orderId" th:value="${order.id}">
                       <h4 th:text="'Курьер: '+${order.driver}"></h4>
                     </div>

@@ -9,7 +9,7 @@ import java.util.List;
 public interface OrderService {
     List<OrderEntity> getOrders();
 
-    void createOrder(List<Product> products, Double price, String id, String address);
+    void createOrder(List<Product> products, Integer price, String id, String name, String address, String phone);
 
     void saveOrder(OrderEntity order);
 

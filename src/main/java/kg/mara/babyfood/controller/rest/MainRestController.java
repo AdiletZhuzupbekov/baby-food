@@ -27,7 +27,11 @@ public class MainRestController {
     public Page getProductList(
             @RequestParam(required = false) Integer _limit,
             @RequestParam (required = false) Integer _page,
-            @RequestParam(required = false) String category) {
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) List<String> name,
+            @RequestParam(required = false) List<String> size,
+            @RequestParam(required = false) List<String> age) {
         PageRequest pr;
         Page<ProductEntity> productEntities;
         if (_limit != null && _page != null) {
@@ -35,24 +39,26 @@ public class MainRestController {
         } else {
             pr = PageRequest.of(0, 15);
         }
-        productEntities = productService.getProducts(pr, category);
+        productEntities = productService.getProducts(pr, category, q, name, size, age);
         return productEntities;
     }
     @PostMapping("/create-order")
     public String createOrder(@RequestBody Map<String, Object> payload){
 
-        List<Map<String, Object>> products = (List<Map<String, Object>>) payload.get("product");
+        List<Map<String, Object>> products = (List<Map<String, Object>>) payload.get("products");
         List<Product> productList = new ArrayList<>();
-        Double price = (Double) payload.get("price");
-        String orderId = payload.get("order").toString();
+        Integer price = (Integer) payload.get("total");
+        String name =  payload.get("name").toString();
         String address = payload.get("address").toString();
+        String phone = payload.get("phone").toString();
+        String orderId = payload.get("id").toString();
         for (Map<String,Object> o : products){
             Product p = new Product();
             p.setBarCode(o.get("barcode").toString());
             p.setCount((Integer) o.get("count"));
             productList.add(p);
         }
-        orderService.createOrder(productList, price, orderId, address);
+        orderService.createOrder(productList, price, orderId, name, address, phone);
         return "SUCCESS";
     }
 

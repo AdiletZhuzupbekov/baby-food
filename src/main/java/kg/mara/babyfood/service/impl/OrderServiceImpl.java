@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createOrder(List<Product> products, Double price, String id, String address) {
+    public void createOrder(List<Product> products, Integer price, String id, String name, String address, String phone) {
 
         List<ReservedProduct> reservedProducts = new ArrayList<>();
         for (Product p : products){
@@ -66,10 +66,12 @@ public class OrderServiceImpl implements OrderService {
         OrderEntity order = new OrderEntity();
         order.setOrderDt(LocalDateTime.now());
         order.setOrderType(OrderType.НОВЫЙ);
-        order.setTotalPrice(price);
+        order.setTotalPrice(Double.valueOf(price));
         order.setReservedProducts(reservedProducts);
         order.setOrderId(id);
         order.setAddress(address);
+        order.setName(name);
+        order.setPhone(phone);
         orderDao.save(order);
     }
 

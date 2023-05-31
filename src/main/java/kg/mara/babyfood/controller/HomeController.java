@@ -100,4 +100,12 @@ public class HomeController {
     public void export(HttpServletResponse response) throws IOException {
         excelService.revisionToExcel(response);
     }
+    @PostMapping("/delete-product")
+    public String delete(@RequestParam Long productId, Model model){
+        List<ProductEntity> products = productService.getProductsForPanel();
+        model.addAttribute("product", products);
+        model.addAttribute("pageName", "Baby Food");
+        productService.deleteProduct(productId);
+        return "redirect:/product";
+    }
 }

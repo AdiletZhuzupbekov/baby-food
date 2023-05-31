@@ -42,15 +42,24 @@ public class ExcelServiceImpl implements ExcelService {
 
         // Заполняем таблицу данными
         int rowNum = 3;
+        double total = 0;
         for (ReservedProduct product : order.getReservedProducts()) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(product.getName());
             row.createCell(1).setCellValue(product.getCount() + "шт");
             row.createCell(2).setCellValue(product.getPrice() + "сом");
             row.createCell(3).setCellValue((product.getCount() * product.getPrice()) + "сом");
+            total += product.getCount() * product.getPrice();
         }
-        Row row2 = sheet.createRow(rowNum + 1);
-        row2.createCell(0).setCellValue("Стоимость заказа: " + order.getTotalPrice() + "сом");
+        Row row2 = sheet.createRow(rowNum);
+        row2.createCell(2).setCellValue("Общая стоимость товара:");
+        row2.createCell(3).setCellValue(total + " сом");
+        Row row4 = sheet.createRow(rowNum + 2);
+        row4.createCell(0).setCellValue("Имя: " + order.getName());
+        row4.createCell(2).setCellValue("адрес: " + order.getAddress());
+        Row row3 = sheet.createRow(rowNum + 4);
+        row3.createCell(0).setCellValue("Стоимость заказа вместе с доставкой: ");
+        row3.createCell(1).setCellValue(order.getTotalPrice() + "сом");
 
 
         // Устанавливаем размер колонок

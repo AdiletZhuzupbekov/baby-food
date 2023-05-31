@@ -58,6 +58,8 @@
                       </table>
                       <h5></h5>
                       <h5 th:text ="'Стоимость заказа:'+' '+${order.totalPrice}"></h5>
+                      <h5 th:text ="'Имя:'+' '+${order.name}"></h5>
+                      <h5 th:text ="'Адрес:'+' '+${order.address}"></h5>
                       <input type="hidden" name="orderId" th:value="${order.id}">
                       <div class="form-group blu-margin" style="width: 300px">
                         <select class="form-control" name="driver"  required id="driver">

@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ProductService {
-    Page<ProductEntity> getProducts(Pageable paging, String category);
+    Page<ProductEntity> getProducts(
+            Pageable paging, String category, String q, List<String> name, List<String> size, List<String> age);
 
     ProductEntity saveProducts(Product products);
 
@@ -23,4 +24,5 @@ public interface ProductService {
 
     Double getSellTotal();
 
+    void deleteProduct(Long productId);
 }

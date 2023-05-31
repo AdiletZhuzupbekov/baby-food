@@ -17,11 +17,10 @@
             <tr>
                 <th scope="col">id</th>
                 <th scope="col">Наименование</th>
+                <th scope="col">Описание</th>
                 <th scope="col">Цена приход</th>
                 <th scope="col">Цена продажа</th>
-                <th scope="col">Размер</th>
                 <th scope="col">Категория</th>
-                <th scope="col">Возраст</th>
                 <th scope="col">Баркод</th>
                 <th scope="col">Колличество</th>
 
@@ -31,13 +30,18 @@
             <tr th:each="product : ${product}">
                 <th th:text = ${product.id}></th>
                 <td th:text = ${product.name}></td>
+                <td th:text = ${product.description}></td>
                 <td th:text = ${product.originalPrice}></td>
                 <td th:text = ${product.price}></td>
-                <td th:text = ${product.size}></td>
                 <td th:text = ${product.category}></td>
-                <td th:text = ${product.age}></td>
                 <td th:text = ${product.barCode}></td>
                 <td th:text = ${product.count}></td>
+                <td sec:authorize="hasAuthority('ADMIN')">
+                    <form action="/delete-product" method="post">
+                    <input type="hidden" name="productId" th:value="${product.id}">
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

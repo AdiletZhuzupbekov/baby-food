@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class OrderEntity {
+public class    OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -25,6 +25,8 @@ public class OrderEntity {
     private String orderId;
     private String address;
     private String driver;
+    private String name;
+    private String phone;
 
 
 }

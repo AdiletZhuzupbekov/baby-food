@@ -1,8 +1,6 @@
 package kg.mara.babyfood.service.impl;
 
-import kg.mara.babyfood.dao.OrderDao;
 import kg.mara.babyfood.dao.ProductDao;
-import kg.mara.babyfood.entities.OrderEntity;
 import kg.mara.babyfood.entities.ProductEntity;
 import kg.mara.babyfood.mapper.ProductMapper;
 import kg.mara.babyfood.model.Product;
@@ -12,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,9 +20,24 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
 
     @Override
-    public Page<ProductEntity> getProducts(Pageable paging, String category) {
-        if (category != null){
-            return productDao.findAllByCategoryIsLikeIgnoreCaseOrderByIdAsc(paging, category);
+    public Page<ProductEntity> getProducts(
+            Pageable paging, String category, String q, List<String> name, List<String> size, List<String> age) {
+        if (category != null && q != null){
+            return productDao.findAllByCategoryIsLikeAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(category,q, q,paging);
+        }else  if (category != null){
+            if (name != null && size != null){
+                return productDao.findAllByNameInAndSizeInAndCategoryIsLike(name, size, category, paging);
+            }else if (name != null && age != null){
+                return productDao.findAllByNameInAndAgeInAndCategoryIsLike(name, age, category, paging);
+            }else if(size != null){
+                return productDao.findAllBySizeInAndCategoryIsLike(size, category, paging);
+            }else if(name != null){
+                return productDao.findAllByNameInAndCategoryIsLike(name, category,paging);
+            }else {
+                return productDao.findAllByCategoryIsLikeIgnoreCaseOrderByIdAsc(paging, category);
+            }
+        } else if (q != null){
+            return productDao.findAllByNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(q, q,paging);
         }else {
             return productDao.findAll(paging);
         }
@@ -35,15 +47,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductEntity saveProducts(Product product) {
          ProductEntity pe = productDao.findByBarCode(product.getBarCode());
-         pe.setName(product.getName());
-         pe.setNameRus(product.getNameRus());
-         pe.setDescription(product.getDescription());
-         pe.setCount(product.getCount());
-         pe.setPrice(product.getPrice());
-         pe.setOriginalPrice(product.getOriginalPrice());
-         pe.setSize(product.getSize());
-         pe.setAge(product.getAge());
-         pe.setCategory(product.getCategory());
+         if (pe != null) {
+             pe.setName(product.getName());
+             pe.setNameRus(product.getNameRus());
+             pe.setDescription(product.getDescription());
+             pe.setCount(product.getCount());
+             pe.setPrice(product.getPrice());
+             pe.setOriginalPrice(product.getOriginalPrice());
+             pe.setSize(product.getSize());
+             pe.setAge(product.getAge());
+             pe.setCategory(product.getCategory());
+         }else {
+             pe = productMapper.toEntity(product);
+         }
          productDao.save(pe);
          return  pe;
     }
@@ -85,6 +101,11 @@ public class ProductServiceImpl implements ProductService {
             total += pe.getPrice() * pe.getCount();
         }
         return total;
+    }
+
+    @Override
+    public void deleteProduct(Long productId) {
+        productDao.deleteById(productId);
     }
 
 
