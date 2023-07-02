@@ -54,12 +54,16 @@ public class ExcelServiceImpl implements ExcelService {
         Row row2 = sheet.createRow(rowNum);
         row2.createCell(2).setCellValue("Общая стоимость товара:");
         row2.createCell(3).setCellValue(total + " сом");
+        Row row3 = sheet.createRow(rowNum + 1);
+        row3.createCell(2).setCellValue("Стоимость с доставкой: ");
+        row3.createCell(3).setCellValue(order.getTotalPrice() + "сом");
         Row row4 = sheet.createRow(rowNum + 2);
         row4.createCell(0).setCellValue("Имя: " + order.getName());
-        row4.createCell(2).setCellValue("адрес: " + order.getAddress());
-        Row row3 = sheet.createRow(rowNum + 4);
-        row3.createCell(0).setCellValue("Стоимость заказа вместе с доставкой: ");
-        row3.createCell(1).setCellValue(order.getTotalPrice() + "сом");
+        Row row5 = sheet.createRow(rowNum + 3);
+        row5.createCell(0).setCellValue("Номер: " + order.getPhone());
+        Row row6 = sheet.createRow(rowNum + 4);
+        row6.createCell(0).setCellValue("адрес: " + order.getAddress());
+
 
 
         // Устанавливаем размер колонок

@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
         } else if (q != null){
             return productDao.findAllByNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(q, q,paging);
         }else {
-            return productDao.findAll(paging);
+            return productDao.findAllByCountGreaterThan(0,paging);
         }
     }
 
@@ -85,20 +85,24 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Double getBaseTotal() {
-        Double total = 0.0;
-        List<ProductEntity> productEntities = productDao.findAll();
+        double total = 0.0;
+        List<ProductEntity> productEntities = productDao.findAllByCountGreaterThan();
         for (ProductEntity pe : productEntities){
-            total += pe.getOriginalPrice() * pe.getCount();
+            if (pe.getOriginalPrice() != null) {
+                total += pe.getOriginalPrice() * pe.getCount();
+            }
         }
         return total;
     }
 
     @Override
     public Double getSellTotal() {
-        Double total = 0.0;
-        List<ProductEntity> productEntities = productDao.findAll();
+        double total = 0.0;
+        List<ProductEntity> productEntities = productDao.findAllByCountGreaterThan();
         for (ProductEntity pe : productEntities){
-            total += pe.getPrice() * pe.getCount();
+            if (pe.getOriginalPrice() != null) {
+                total += pe.getPrice() * pe.getCount();
+            }
         }
         return total;
     }

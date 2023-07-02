@@ -34,5 +34,11 @@ public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
     Page<ProductEntity> findAllByNameInAndSizeInAndCategoryIsLike(List<String> name, List<String> size, String category, Pageable paging);
 
     Page<ProductEntity> findAllByCategoryIsLikeAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(String category, String q, String q1, Pageable paging);
+
+    Page<ProductEntity> findAllByCountGreaterThan(int i, Pageable paging);
+
+    @Query("select pe from ProductEntity pe where pe.count > 0")
+    List<ProductEntity> findAllByCountGreaterThan();
+
 }
 

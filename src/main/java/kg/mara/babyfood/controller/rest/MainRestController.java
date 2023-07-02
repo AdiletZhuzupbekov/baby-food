@@ -35,6 +35,9 @@ public class MainRestController {
         PageRequest pr;
         Page<ProductEntity> productEntities;
         if (_limit != null && _page != null) {
+            if (_page > 0) {
+                _page -= 1;
+            }
             pr = PageRequest.of(_page, _limit);
         } else {
             pr = PageRequest.of(0, 15);
