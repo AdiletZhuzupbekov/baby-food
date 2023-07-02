@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductMapperImpl implements ProductMapper {
+
     @Override
     public Product fromEntity(ProductEntity pe) {
         Product product = new Product();
@@ -16,7 +17,12 @@ public class ProductMapperImpl implements ProductMapper {
         product.setDescription(pe.getDescription());
         product.setPrice(pe.getPrice());
         product.setSize(pe.getSize());
-        product.setType(pe.getType());
+        product.setCategory(pe.getCategory());
+        product.setBarCode(pe.getBarCode());
+        product.setCount(pe.getCount());
+        product.setImage(pe.getImage());
+        product.setAge(pe.getAge());
+        product.setOriginalPrice(pe.getOriginalPrice());
         return product;
     }
 
@@ -29,7 +35,12 @@ public class ProductMapperImpl implements ProductMapper {
         product.setDescription(pe.getDescription());
         product.setPrice(pe.getPrice());
         product.setSize(pe.getSize());
-        product.setType(pe.getType());
+        product.setCategory(pe.getCategory());
+        product.setBarCode(pe.getBarCode());
+        product.setCount(pe.getCount());
+        product.setImage(pe.getImage());
+        product.setAge(pe.getAge());
+        product.setOriginalPrice(pe.getOriginalPrice());
         return product;
     }
 }

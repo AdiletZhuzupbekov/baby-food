@@ -1,0 +1,52 @@
+<div th:fragment="navigation" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <div class="container-fluid p-5 text-center">
+    <div>
+      <img src="http://176.126.167.148:8080/product-photos/baby-food-logo.jpg"
+           class="img-fluid"  style="width: 200px"/>
+    </div>
+
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand " href="/">Главная</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="product-crud">Добавить товар</span></a>
+        </li>
+        <div sec:authorize="hasAuthority('ADMIN')">
+        <li class="nav-item">
+          <a class="nav-link" href="/report">Отчеты</a>
+        </li>
+        </div>
+        <li class="nav-item">
+          <a class="nav-link" href="/product/order">Заказы</a>
+        </li>
+        <div sec:authorize="hasAuthority('ADMIN')">
+          <li class="nav-item">
+            <a class="nav-link" href="/user">Пользователи</a>
+          </li>
+        </div>
+        <li class="nav-item">
+          <a class="nav-link" href="/deliver">Курьеры</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/revision">Склад</a>
+        </li>
+      </ul>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+      <h5 sec:authentication="name" class="m-2"></h5>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <form th:action="@{/logout}" method="post">
+            <input type="submit" class="btn btn-primary" value="Выход"/>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

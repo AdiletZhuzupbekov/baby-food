@@ -1,0 +1,92 @@
+<div th:fragment="add-product-exist" xmlns:sec="http://www.w3.org/1999/xhtml">
+<h2>Найдено в базе</h2>
+<form action="/product/add" method="post" enctype="multipart/form-data"
+      th:each="p :${product}">
+  <div class="row g-3 align-items-center">
+    <input type="hidden" name="id" th:value="${p.id}">
+    <div class="col align-self-start">
+      <label for="barCode" class="col-form-label" style="width: 150px">Bar code:</label>
+    </div>
+    <div class="col align-self-end">
+      <input class="form-control mt-2" readonly style="width: 300px" type="text" width="200px" id="barCode"
+             name="barCode" placeholder="Бар код"
+             th:value="${p.barCode}">
+    </div>
+    <div class="col align-self-start">
+      <label for="name" class="col-form-label" style="width: 150px">Hазвание:</label>
+    </div>
+    <div class="col align-self-end">
+      <input class="form-control mt-2" style="width: 300px" type="text" id="name" name="name"
+             placeholder="название" th:value="${p.name}">
+    </div>
+    <div class="col-auto">
+      <label for="barCode" class="col-form-label" style="width: 283px">Hазвание на русском:</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control mt-2" style="width: 300px" type="text" id="nameRus" name="nameRus"
+             placeholder="название рус" th:value="${p.nameRus}">
+    </div>
+    <div class="col-auto">
+      <label for="description" class="col-form-label" style="width: 283px">Oписание:</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control mt-2" style="width: 300px" type="text" id="description"
+             name="description" placeholder="описание"  th:value="${p.description}">
+    </div>
+    <div class="col-auto">
+      <label for="size" class="col-form-label" style="width: 283px">Размер:</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control mt-2" style="width: 300px" type="text" id="size"
+             name="size" readonly th:value="${p.size}">
+    </div>
+    <div class="col-auto">
+      <label for="age" class="col-form-label" style="width: 283px">Возраст:</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control mt-2"  style="width: 300px" type="text" id="age" name="age"
+             readonly th:value="${p.age}">
+    </div>
+    <div class="col-auto">
+      <label for="price" class="col-form-label" style="width: 283px">Цена приходная:</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control mt-2"  style="width: 300px" type="text" id="originPrice" name="originPrice"
+             placeholder="цена прихода" th:value="${p.originalPrice}">
+    </div>
+
+    <div class="col-auto">
+      <label for="price" class="col-form-label" style="width: 283px">Цена продажи:</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control mt-2"  style="width: 300px" type="text" id="price" name="price"
+             placeholder="цена продажи" th:value="${p.price}">
+    </div>
+    <div class="col-auto">
+      <label for="category" class="col-form-label" style="width: 283px">Категория:</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control mt-2"  style="width: 300px" type="text" id="category" name="category"
+             readonly th:value="${p.category}">
+    </div>
+
+    <div class="col-auto">
+      <label for="count" class="col-form-label" style="width: 283px">Kолличество:</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control mt-2" readonly style="width: 300px" type="number" id="count" name="count"
+             placeholder="колличество"
+             th:value="${p.count}">
+    </div>
+    <div class="col-auto">
+      <label for="plus" class="col-form-label" style="width: 283px">Добавить:</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control mt-2" style="width: 300px" type="text" id="plus" name="plus"
+             placeholder="сколько хотите добавить?">
+    </div>
+
+  </div>
+  <button class="btn btn-success mt-2" type="submit" id="addToTable">Добавить в список</button>
+</form>
+</div>
