@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
     Page<ProductEntity> getProducts(
@@ -25,4 +26,6 @@ public interface ProductService {
     Double getSellTotal();
 
     void deleteProduct(Long productId);
+
+    Optional<ProductEntity> getProduct(Long id);
 }

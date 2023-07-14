@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -22,7 +23,12 @@ public class MainRestController {
 
     private final ProductService productService;
     private final OrderService orderService;
-
+    @GetMapping("/{id}")
+    public Optional<ProductEntity> getProduct(@PathVariable(required = false, name = "id") Long id){
+        PageRequest pr;
+        pr = PageRequest.of(0, 15);
+        return productService.getProduct(id);
+    }
     @GetMapping()
     public Page getProductList(
             @RequestParam(required = false) Integer _limit,
@@ -34,6 +40,7 @@ public class MainRestController {
             @RequestParam(required = false) List<String> age) {
         PageRequest pr;
         Page<ProductEntity> productEntities;
+
         if (_limit != null && _page != null) {
             if (_page > 0) {
                 _page -= 1;

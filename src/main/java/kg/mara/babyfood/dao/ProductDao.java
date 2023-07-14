@@ -2,13 +2,13 @@ package kg.mara.babyfood.dao;
 
 import kg.mara.babyfood.entities.ProductEntity;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
@@ -40,5 +40,8 @@ public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
     @Query("select pe from ProductEntity pe where pe.count > 0")
     List<ProductEntity> findAllByCountGreaterThan();
 
+    Page<ProductEntity> findAllByAgeInAndCategoryIsLike(List<String> age, String category, Pageable paging);
+
+//    Page<ProductEntity> findById(Long id, Pageable pageable);
 }
 
