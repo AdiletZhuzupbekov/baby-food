@@ -10,7 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,8 @@ public class ProductServiceImpl implements ProductService {
                 return productDao.findAllBySizeInAndCategoryIsLike(size, category, paging);
             }else if(name != null){
                 return productDao.findAllByNameInAndCategoryIsLike(name, category,paging);
+            }else if(age != null){
+                return productDao.findAllByAgeInAndCategoryIsLike(age, category,paging);
             }else {
                 return productDao.findAllByCategoryIsLikeIgnoreCaseOrderByIdAsc(paging, category);
             }
@@ -110,6 +114,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(Long productId) {
         productDao.deleteById(productId);
+    }
+
+    @Override
+    public Optional<ProductEntity> getProduct(Long id) {
+        return productDao.findById(id);
     }
 
 
