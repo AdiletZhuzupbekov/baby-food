@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 @RestController
 @RequestMapping("/products")
-@CrossOrigin
 @RequiredArgsConstructor
 public class MainRestController {
 

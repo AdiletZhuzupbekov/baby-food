@@ -75,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductEntity> getProductsForPanel() {
-        return productDao.findTop20ByOrderByIdDesc();
+        return productDao.findAllByOrderByIdDesc();
     }
 
     @Override

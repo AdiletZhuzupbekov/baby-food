@@ -103,7 +103,8 @@ public class ExcelServiceImpl implements ExcelService {
         orderNum.createCell(1).setCellValue("Дата: " + LocalDate.now());
         Row headerRow = sheet.createRow(2);
         headerRow.createCell(1).setCellValue("Наименование товара");
-        headerRow.createCell(2).setCellValue("Колличество");
+        headerRow.createCell(2).setCellValue("Описание");
+        headerRow.createCell(3).setCellValue("Количество");
 
         // Заполняем таблицу данными
         int rowNum = 3;
@@ -113,7 +114,8 @@ public class ExcelServiceImpl implements ExcelService {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(count);
             row.createCell(1).setCellValue(product.getName());
-            row.createCell(2).setCellValue(product.getCount() + "шт");
+            row.createCell(2).setCellValue(product.getDescription());
+            row.createCell(3).setCellValue(product.getCount() + "шт");
             count++;
         }
 
@@ -121,6 +123,7 @@ public class ExcelServiceImpl implements ExcelService {
         sheet.autoSizeColumn(0);
         sheet.autoSizeColumn(1);
         sheet.autoSizeColumn(2);
+        sheet.autoSizeColumn(3);
 
         // Устанавливаем заголовок файла и тип содержимого
         String name = "Ревизия " + LocalDate.now();

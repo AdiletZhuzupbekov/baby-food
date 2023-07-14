@@ -40,5 +40,6 @@ public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
     @Query("select pe from ProductEntity pe where pe.count > 0")
     List<ProductEntity> findAllByCountGreaterThan();
 
+    List<ProductEntity> findAllByOrderByIdDesc();
 }
 
