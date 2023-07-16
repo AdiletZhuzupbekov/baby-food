@@ -88,6 +88,9 @@ public class HomeController {
                 product.setImage(fileName);
             }
             product.setBarCode(barCode);
+            if (count == null){
+                count = 0;
+            }
             if (plus != null) {
                 product.setCount(count + plus);
             } else {

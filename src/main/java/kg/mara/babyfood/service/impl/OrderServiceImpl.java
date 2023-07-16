@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
             ReservedProduct rp = new ReservedProduct();
             rp.setCount(p.getCount());
             rp.setProductId(pe.getId());
-            rp.setBarcode(pe.getBarCode());
+            rp.setBarcode(pe.getDescription());
             rp.setName(pe.getName());
             rp.setPrice(pe.getPrice());
             rp.setOriginalPrice(pe.getOriginalPrice());

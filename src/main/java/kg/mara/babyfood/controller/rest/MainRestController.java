@@ -25,8 +25,6 @@ public class MainRestController {
     private final OrderService orderService;
     @GetMapping("/{id}")
     public Optional<ProductEntity> getProduct(@PathVariable(required = false, name = "id") Long id){
-        PageRequest pr;
-        pr = PageRequest.of(0, 15);
         return productService.getProduct(id);
     }
     @GetMapping()

@@ -12,12 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
-    Page<ProductEntity> findAllByCategoryIsLikeIgnoreCaseOrderByIdAsc(Pageable pr, String category);
+    Page<ProductEntity> findAllByCountGreaterThanAndCategoryIsLikeIgnoreCaseOrderByIdAsc(int i,Pageable pr, String category);
 //    Page<ProductEntity> findAllByTypeIsLikeAndAndNameRusIsLikeIgnoreCaseOrderByIdAsc(String type, String q, PageRequest pr);
 //    @Query("select pe from ProductEntity pe where pe.name ?1 or pe.nameRus like  ?2 order by pe.id asc ")
 //    Page<ProductEntity> findAllByNameIsLikeIgnoreCaseOrderByIdAsc(String name, String nameRus, Pageable pr);
 
-    Page<ProductEntity> findAllByNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(String name,String nameRus,Pageable pr);
+    Page<ProductEntity> findAllByCountGreaterThanAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(int i,String name,String nameRus,Pageable pr);
 
 
 
@@ -25,23 +25,23 @@ public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
 
     List<ProductEntity> findTop20ByOrderByIdDesc();
 
-    Page<ProductEntity> findAllByNameInAndCategoryIsLike(List<String> name, String category, Pageable paging);
+    Page<ProductEntity> findAllByCountGreaterThanAndNameInAndCategoryIsLike(int i,List<String> name, String category, Pageable paging);
 
-    Page<ProductEntity> findAllBySizeInAndCategoryIsLike(List<String> size, String category, Pageable paging);
+    Page<ProductEntity> findAllByCountGreaterThanAndSizeInAndCategoryIsLike(int i, List<String> size, String category, Pageable paging);
 
-    Page<ProductEntity> findAllByNameInAndAgeInAndCategoryIsLike(List<String> name, List<String> age, String category, Pageable paging);
+    Page<ProductEntity> findAllByCountGreaterThanAndNameInAndAgeInAndCategoryIsLike(int i,List<String> name, List<String> age, String category, Pageable paging);
 
-    Page<ProductEntity> findAllByNameInAndSizeInAndCategoryIsLike(List<String> name, List<String> size, String category, Pageable paging);
+    Page<ProductEntity> findAllByCountGreaterThanAndNameInAndSizeInAndCategoryIsLike(int i,List<String> name, List<String> size, String category, Pageable paging);
 
-    Page<ProductEntity> findAllByCategoryIsLikeAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(String category, String q, String q1, Pageable paging);
+    Page<ProductEntity> findAllByCountGreaterThanAndCategoryIsLikeAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(int i,String category, String q, String q1, Pageable paging);
 
     Page<ProductEntity> findAllByCountGreaterThan(int i, Pageable paging);
 
     @Query("select pe from ProductEntity pe where pe.count > 0")
     List<ProductEntity> findAllByCountGreaterThan();
 
-    Page<ProductEntity> findAllByAgeInAndCategoryIsLike(List<String> age, String category, Pageable paging);
+    Page<ProductEntity> findAllByCountGreaterThanAndAgeInAndCategoryIsLike(int i,List<String> age, String category, Pageable paging);
 
-//    Page<ProductEntity> findById(Long id, Pageable pageable);
+    List<ProductEntity> findAllByOrderByIdDesc();
 }
 

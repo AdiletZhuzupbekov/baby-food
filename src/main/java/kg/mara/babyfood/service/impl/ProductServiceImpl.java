@@ -25,23 +25,23 @@ public class ProductServiceImpl implements ProductService {
     public Page<ProductEntity> getProducts(
             Pageable paging, String category, String q, List<String> name, List<String> size, List<String> age) {
         if (category != null && q != null){
-            return productDao.findAllByCategoryIsLikeAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(category,q, q,paging);
+            return productDao.findAllByCountGreaterThanAndCategoryIsLikeAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(0,category,q, q,paging);
         }else  if (category != null){
             if (name != null && size != null){
-                return productDao.findAllByNameInAndSizeInAndCategoryIsLike(name, size, category, paging);
+                return productDao.findAllByCountGreaterThanAndNameInAndSizeInAndCategoryIsLike(0,name, size, category, paging);
             }else if (name != null && age != null){
-                return productDao.findAllByNameInAndAgeInAndCategoryIsLike(name, age, category, paging);
+                return productDao.findAllByCountGreaterThanAndNameInAndAgeInAndCategoryIsLike(0, name, age, category, paging);
             }else if(size != null){
-                return productDao.findAllBySizeInAndCategoryIsLike(size, category, paging);
+                return productDao.findAllByCountGreaterThanAndSizeInAndCategoryIsLike(0,size, category, paging);
             }else if(name != null){
-                return productDao.findAllByNameInAndCategoryIsLike(name, category,paging);
+                return productDao.findAllByCountGreaterThanAndNameInAndCategoryIsLike(0,name, category,paging);
             }else if(age != null){
-                return productDao.findAllByAgeInAndCategoryIsLike(age, category,paging);
+                return productDao.findAllByCountGreaterThanAndAgeInAndCategoryIsLike(0,age, category,paging);
             }else {
-                return productDao.findAllByCategoryIsLikeIgnoreCaseOrderByIdAsc(paging, category);
+                return productDao.findAllByCountGreaterThanAndCategoryIsLikeIgnoreCaseOrderByIdAsc(0,paging, category);
             }
         } else if (q != null){
-            return productDao.findAllByNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(q, q,paging);
+            return productDao.findAllByCountGreaterThanAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(0,q, q,paging);
         }else {
             return productDao.findAllByCountGreaterThan(0,paging);
         }

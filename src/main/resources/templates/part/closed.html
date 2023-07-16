@@ -41,6 +41,7 @@
                         <thead>
                         <tr>
                           <th scope="col">Название</th>
+                          <th scope="col">Описание</th>
                           <th scope="col">колличество</th>
                           <th scope="col">цена за штуку</th>
                           <th scope="col">общая цена</th>
@@ -49,6 +50,7 @@
                         <tbody>
                         <tr th:each="product : ${order.reservedProducts}">
                           <th th:text = ${product.name}></th>
+                          <th th:text = ${product.barcode}></th>
                           <th th:text = ${product.count}></th>
                           <th th:text = "${product.price}">сом</th>
                           <th id="price" th:text = "${product.price * product.count}">сом</th>

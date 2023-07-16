@@ -36,9 +36,10 @@ public class ExcelServiceImpl implements ExcelService {
         orderNum.createCell(0).setCellValue("№"+order.getOrderId());
         Row headerRow = sheet.createRow(1);
         headerRow.createCell(0).setCellValue("Наименование товара");
-        headerRow.createCell(1).setCellValue("Колличество");
-        headerRow.createCell(2).setCellValue("Цена за единицу");
-        headerRow.createCell(3).setCellValue("общая цена");
+        headerRow.createCell(1).setCellValue("Описание");
+        headerRow.createCell(2).setCellValue("Колличество");
+        headerRow.createCell(3).setCellValue("Цена за единицу");
+        headerRow.createCell(4).setCellValue("общая цена");
 
         // Заполняем таблицу данными
         int rowNum = 3;
@@ -46,9 +47,10 @@ public class ExcelServiceImpl implements ExcelService {
         for (ReservedProduct product : order.getReservedProducts()) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(product.getName());
-            row.createCell(1).setCellValue(product.getCount() + "шт");
-            row.createCell(2).setCellValue(product.getPrice() + "сом");
-            row.createCell(3).setCellValue((product.getCount() * product.getPrice()) + "сом");
+            row.createCell(1).setCellValue(product.getBarcode());
+            row.createCell(2).setCellValue(product.getCount() + "шт");
+            row.createCell(3).setCellValue(product.getPrice() + "сом");
+            row.createCell(4).setCellValue((product.getCount() * product.getPrice()) + "сом");
             total += product.getCount() * product.getPrice();
         }
         Row row2 = sheet.createRow(rowNum);
