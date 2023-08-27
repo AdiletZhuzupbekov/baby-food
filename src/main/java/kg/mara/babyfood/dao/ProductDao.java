@@ -43,5 +43,7 @@ public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
     Page<ProductEntity> findAllByCountGreaterThanAndAgeInAndCategoryIsLike(int i,List<String> age, String category, Pageable paging);
 
     List<ProductEntity> findAllByOrderByIdDesc();
+
+    List<ProductEntity> findAllByOrderByCountDesc();
 }
 

@@ -52,15 +52,16 @@ public class OrderServiceImpl implements OrderService {
         for (Product p : products){
             ProductEntity pe = productDao.findByBarCode(p.getBarCode());
             pe.setCount(pe.getCount() - p.getCount());
-            productDao.save(pe);
+
             ReservedProduct rp = new ReservedProduct();
             rp.setCount(p.getCount());
             rp.setProductId(pe.getId());
-            rp.setBarcode(pe.getDescription());
+            rp.setBarcode(pe.getBarCode());
             rp.setName(pe.getName());
             rp.setPrice(pe.getPrice());
             rp.setOriginalPrice(pe.getOriginalPrice());
             reservedProductDao.save(rp);
+            productDao.save(pe);
             reservedProducts.add(rp);
         }
         OrderEntity order = new OrderEntity();
@@ -91,11 +92,13 @@ public class OrderServiceImpl implements OrderService {
     public void cancelOrder(Long orderId) {
         OrderEntity orderEntity = orderDao.getById(orderId);
         List<ReservedProduct> reservedProducts = orderEntity.getReservedProducts();
+        List<ProductEntity> productEntities = new ArrayList<>();
         for (ReservedProduct rp : reservedProducts){
             ProductEntity pe = productDao.findByBarCode(rp.getBarcode());
             pe.setCount(pe.getCount() + rp.getCount());
-            productDao.save(pe);
+            productEntities.add(pe);
         }
+        productDao.saveAll(productEntities);
         orderEntity.setOrderType(OrderType.ОТМЕНЕН);
         orderDao.save(orderEntity);
     }

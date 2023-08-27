@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductEntity> findAll() {
-        return productDao.findAll();
+        return productDao.findAllByOrderByCountDesc();
     }
 
     @Override
