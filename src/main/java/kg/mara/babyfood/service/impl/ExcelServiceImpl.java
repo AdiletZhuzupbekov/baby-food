@@ -46,7 +46,7 @@ public class ExcelServiceImpl implements ExcelService {
         double total = 0;
         for (ReservedProduct product : order.getReservedProducts()) {
             Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(product.getName()+" - "+product.getBarcode());
+            row.createCell(0).setCellValue(product.getName()+" - "+product.getDescription());
             row.createCell(1).setCellValue("  " + product.getCount() + "шт");
             row.createCell(2).setCellValue(product.getPrice() + "сом");
             row.createCell(3).setCellValue((product.getCount() * product.getPrice()) + "сом");
@@ -117,7 +117,7 @@ public class ExcelServiceImpl implements ExcelService {
             row.createCell(0).setCellValue(count);
             row.createCell(1).setCellValue(product.getName());
             row.createCell(2).setCellValue(product.getDescription());
-            row.createCell(3).setCellValue(product.getCount() + "шт");
+            row.createCell(3).setCellValue("  "+ product.getCount() + "шт");
             count++;
         }
 

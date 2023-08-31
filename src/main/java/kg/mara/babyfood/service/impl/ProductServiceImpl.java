@@ -6,14 +6,15 @@ import kg.mara.babyfood.mapper.ProductMapper;
 import kg.mara.babyfood.model.Product;
 import kg.mara.babyfood.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -102,13 +103,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Double getSellTotal() {
         double total = 0.0;
-        List<ProductEntity> productEntities = productDao.findAllByCountGreaterThan();
-        for (ProductEntity pe : productEntities){
-            if (pe.getOriginalPrice() != null) {
-                total += pe.getPrice() * pe.getCount();
+        try {
+            List<ProductEntity> productEntities = productDao.findAllByCountGreaterThan();
+            for (ProductEntity pe : productEntities) {
+                if (pe.getPrice() != null) {
+                    total += pe.getPrice() * pe.getCount();
+                }
             }
+            return total;
+        }catch (Exception e){
+            log.info(e.getMessage());
+            return null;
         }
-        return total;
     }
 
     @Override

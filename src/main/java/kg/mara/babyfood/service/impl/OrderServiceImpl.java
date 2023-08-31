@@ -10,12 +10,14 @@ import kg.mara.babyfood.enums.OrderType;
 import kg.mara.babyfood.model.Product;
 import kg.mara.babyfood.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
@@ -59,6 +61,7 @@ public class OrderServiceImpl implements OrderService {
             rp.setBarcode(pe.getBarCode());
             rp.setName(pe.getName());
             rp.setPrice(pe.getPrice());
+            rp.setDescription(pe.getDescription());
             rp.setOriginalPrice(pe.getOriginalPrice());
             reservedProductDao.save(rp);
             productDao.save(pe);
@@ -141,13 +144,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Double getByDt(LocalDateTime startDt, LocalDateTime endDt) {
-        List<OrderEntity> orderEntities = orderDao.findByDate(startDt, endDt, OrderType.ЗАВЕРШЕН);
         double total = 0.0;
-        for (OrderEntity o : orderEntities){
-            for (ReservedProduct rp : o.getReservedProducts()){
-                total += (rp.getPrice() * rp.getCount())-(rp.getOriginalPrice() * rp.getCount());
+        try {
+            List<OrderEntity> orderEntities = orderDao.findByDate(startDt, endDt, OrderType.ЗАВЕРШЕН);
+            if (orderEntities != null) {
+                for (OrderEntity o : orderEntities) {
+                    for (ReservedProduct rp : o.getReservedProducts()) {
+                        total += (rp.getPrice() * rp.getCount()) - (rp.getOriginalPrice() * rp.getCount());
+                    }
+                }
             }
+            return total;
+        }catch (Exception e){
+            log.info(e.getMessage());
+            return total;
         }
-        return total;
     }
 }
