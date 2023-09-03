@@ -150,13 +150,15 @@ public class OrderServiceImpl implements OrderService {
             if (orderEntities != null) {
                 for (OrderEntity o : orderEntities) {
                     for (ReservedProduct rp : o.getReservedProducts()) {
-                        total += (rp.getPrice() * rp.getCount()) - (rp.getOriginalPrice() * rp.getCount());
+                        if (rp.getOriginalPrice() != null && rp.getPrice() != null) {
+                            total += (rp.getPrice() * rp.getCount()) - (rp.getOriginalPrice() * rp.getCount());
+                        }
                     }
                 }
             }
             return total;
         }catch (Exception e){
-            log.info(String.valueOf(e));
+            log.info(e.getMessage());
             return total;
         }
     }
