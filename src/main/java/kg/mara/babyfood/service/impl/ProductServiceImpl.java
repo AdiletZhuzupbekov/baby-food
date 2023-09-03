@@ -127,5 +127,14 @@ public class ProductServiceImpl implements ProductService {
         return productDao.findById(id);
     }
 
+    @Override
+    public void saveChanges(Long id, double originalPrice, double price) {
+        Optional<ProductEntity> productEntity = productDao.findById(id);
+        ProductEntity product = productEntity.get();
+        product.setOriginalPrice(originalPrice);
+        product.setPrice(price);
+        productDao.save(product);
+    }
+
 
 }

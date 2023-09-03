@@ -28,4 +28,6 @@ public interface ProductService {
     void deleteProduct(Long productId);
 
     Optional<ProductEntity> getProduct(Long id);
+
+    void saveChanges(Long id, double originalPrice, double price);
 }

@@ -28,18 +28,30 @@
             </thead>
             <tbody>
             <tr th:each="product : ${product}">
-                <th th:text = ${product.id}></th>
-                <td th:text = ${product.name}></td>
-                <td th:text = ${product.description}></td>
-                <td th:text = ${product.originalPrice}></td>
-                <td th:text = ${product.price}></td>
-                <td th:text = ${product.category}></td>
-                <td th:text = ${product.barCode}></td>
-                <td th:text = ${product.count}></td>
+                <form action="/save-product-changes" method="post">
+                    <th th:text = ${product.id}></th>
+                    <td th:text = ${product.name}></td>
+                    <td th:text = ${product.description}></td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
+                        <input type="number" name="originalPrice" th:value="${product.originalPrice}">
+                    </td>
+                    <td sec:authorize="hasAuthority('USER')" th:text="${product.originalPrice}"></td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
+                        <input type="number" name="price" th:value="${product.price}">
+                    </td>
+                    <td sec:authorize="hasAuthority('USER')" th:text = ${product.price}></td>
+                    <td th:text = ${product.category}></td>
+                    <td th:text = ${product.barCode}></td>
+                    <td th:text = ${product.count}></td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
+                        <input type="hidden" name="id" th:value="${product.id}">
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                    </td>
+                </form>
                 <td sec:authorize="hasAuthority('ADMIN')">
                     <form action="/delete-product" method="post">
-                    <input type="hidden" name="productId" th:value="${product.id}">
-                    <button type="submit" class="btn btn-danger">Удалить</button>
+                        <input type="hidden" name="productId" th:value="${product.id}">
+                        <button type="submit" class="btn btn-danger">Удалить</button>
                     </form>
                 </td>
             </tr>

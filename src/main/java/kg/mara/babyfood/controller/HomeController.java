@@ -31,6 +31,12 @@ public class HomeController {
         model.addAttribute("pageName", "Baby Food");
         return "product";
     }
+    @PostMapping("/save-product-changes")
+    public String saveChanges(
+            @RequestParam double originalPrice, @RequestParam double price, @RequestParam Long id){
+        productService.saveChanges(id, originalPrice, price);
+        return "redirect:/";
+    }
     @GetMapping("/product-crud")
     public String getProductCrud(Model model){
         model.addAttribute("pageName", "Добавить продукт");
