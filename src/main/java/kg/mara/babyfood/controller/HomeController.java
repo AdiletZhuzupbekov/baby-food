@@ -115,6 +115,6 @@ public class HomeController {
         model.addAttribute("product", products);
         model.addAttribute("pageName", "Baby Food");
         productService.deleteProduct(productId);
-        return "redirect:/product";
+        return "redirect:/";
     }
 }

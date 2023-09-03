@@ -156,7 +156,7 @@ public class OrderServiceImpl implements OrderService {
             }
             return total;
         }catch (Exception e){
-            log.info(e.getMessage());
+            log.info(String.valueOf(e));
             return total;
         }
     }
