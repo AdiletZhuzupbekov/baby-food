@@ -23,6 +23,7 @@ import java.util.List;
 public class HomeController {
     private final ProductService productService;
     private final ExcelService excelService;
+    private String nameToFind = "";
 
     @GetMapping("/")
     public String mainPage(Model model){
@@ -31,11 +32,36 @@ public class HomeController {
         model.addAttribute("pageName", "Baby Food");
         return "product";
     }
+    @GetMapping("/main-filter")
+    public String mainFilter(@RequestParam(required = false) String filter, Model model){
+        List<ProductEntity> products;
+         if (filter == null){
+              if (nameToFind.isEmpty()) {
+               products = productService.getProductsForPanel();
+           }else {
+               products = productService.getProductByFilter(nameToFind);
+               filter = nameToFind;
+           }
+        } else {
+             if (filter.isEmpty()){
+                 products = productService.getProductsForPanel();
+                 nameToFind = "";
+             }else {
+                 nameToFind = filter;
+                 products = productService.getProductByFilter(filter);
+             }
+        }
+        model.addAttribute("toFind" , filter);
+        model.addAttribute("product", products);
+        model.addAttribute("pageName", "Baby Food");
+        return "product";
+    }
     @PostMapping("/save-product-changes")
-    public String saveChanges(
+    public String saveChanges(@RequestParam(required = false) String filter,
             @RequestParam double originalPrice, @RequestParam double price, @RequestParam Long id){
+        nameToFind = filter;
         productService.saveChanges(id, originalPrice, price);
-        return "redirect:/";
+        return "redirect:/main-filter";
     }
     @GetMapping("/product-crud")
     public String getProductCrud(Model model){

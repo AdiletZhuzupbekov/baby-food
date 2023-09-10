@@ -136,5 +136,10 @@ public class ProductServiceImpl implements ProductService {
         productDao.save(product);
     }
 
+    @Override
+    public List<ProductEntity> getProductByFilter(String filter) {
+        return productDao.findAllByNameContainingIgnoreCaseOrderByCategory(filter);
+    }
+
 
 }

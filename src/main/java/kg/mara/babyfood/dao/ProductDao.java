@@ -45,5 +45,7 @@ public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
     List<ProductEntity> findAllByOrderByIdDesc();
 
     List<ProductEntity> findAllByOrderByCountDesc();
+
+    List<ProductEntity> findAllByNameContainingIgnoreCaseOrderByCategory(String filter);
 }
 

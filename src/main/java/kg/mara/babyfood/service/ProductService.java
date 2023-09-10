@@ -30,4 +30,6 @@ public interface ProductService {
     Optional<ProductEntity> getProduct(Long id);
 
     void saveChanges(Long id, double originalPrice, double price);
+
+    List<ProductEntity> getProductByFilter(String filter);
 }
