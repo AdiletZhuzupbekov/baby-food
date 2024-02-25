@@ -23,6 +23,7 @@ public class ProductMapperImpl implements ProductMapper {
         product.setImage(pe.getImage());
         product.setAge(pe.getAge());
         product.setOriginalPrice(pe.getOriginalPrice());
+        product.setCriteria(pe.getCriteria());
         return product;
     }
 

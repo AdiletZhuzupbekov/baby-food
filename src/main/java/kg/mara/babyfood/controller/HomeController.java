@@ -28,6 +28,7 @@ public class HomeController {
     @GetMapping("/")
     public String mainPage(Model model){
         List<ProductEntity> products = productService.getProductsForPanel();
+
         model.addAttribute("product", products);
         model.addAttribute("pageName", "Baby Food");
         return "product";
@@ -62,9 +63,10 @@ public class HomeController {
             @RequestParam double originalPrice,
             @RequestParam double price,
             @RequestParam Long id,
-            @RequestParam int count){
+            @RequestParam int count,
+            @RequestParam String criteria){
         nameToFind = filter;
-        productService.saveChanges(id, originalPrice, price, count);
+        productService.saveChanges(id, originalPrice, price, count, criteria);
         return "redirect:/main-filter";
     }
     @GetMapping("/product-crud")

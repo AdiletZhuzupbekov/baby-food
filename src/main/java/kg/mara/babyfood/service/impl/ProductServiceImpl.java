@@ -129,12 +129,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveChanges(Long id, double originalPrice, double price, int count) {
+    public void saveChanges(Long id, double originalPrice, double price, int count, String criteria) {
         Optional<ProductEntity> productEntity = productDao.findById(id);
         ProductEntity product = productEntity.get();
         product.setOriginalPrice(originalPrice);
         product.setPrice(price);
         product.setCount(count);
+        product.setCriteria(criteria);
         productDao.save(product);
     }
 

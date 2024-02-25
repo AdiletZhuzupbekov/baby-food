@@ -8,7 +8,7 @@
         <version>2.7.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <groupId>kg.mara</groupId>
     <artifactId>baby-food</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <version>42.2.24</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -9,7 +9,7 @@
     <script src="/static/bootstrap-5.3.0-alpha3-dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
     <div th:insert="part/navbar.html :: navigation"></div>
     <div>
         <form action="/main-filter">
@@ -24,6 +24,7 @@
                 <th scope="col">id</th>
                 <th scope="col">Наименование</th>
                 <th scope="col">Описание</th>
+                <th scope="col">Критерия</th>
                 <th scope="col">Цена приход</th>
                 <th scope="col">Цена продажа</th>
                 <th scope="col">Категория</th>
@@ -38,6 +39,9 @@
                     <th th:text = ${product.id}></th>
                     <td th:text = ${product.name}></td>
                     <td th:text = ${product.description}></td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
+                        <input type="text" name="criteria" th:value="${product.criteria}">
+                    </td>
                     <td sec:authorize="hasAuthority('ADMIN')">
                         <input type="number" name="originalPrice" th:value="${product.originalPrice}">
                     </td>
