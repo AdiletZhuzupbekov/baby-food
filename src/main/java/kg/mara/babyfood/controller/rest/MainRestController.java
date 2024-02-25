@@ -56,8 +56,8 @@ public class MainRestController {
         List<Map<String, Object>> products = (List<Map<String, Object>>) payload.get("products");
         List<Product> productList = new ArrayList<>();
         Integer price = (Integer) payload.get("total");
-        String name =  payload.get("name").toString();
-        String address = payload.get("address").toString();
+        String name = (String) payload.get("name");
+        String address = (String) payload.get("address");
         String phone = payload.get("phone").toString();
         String orderId = payload.get("id").toString();
         for (Map<String,Object> o : products){

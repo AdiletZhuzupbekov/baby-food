@@ -57,10 +57,14 @@ public class HomeController {
         return "product";
     }
     @PostMapping("/save-product-changes")
-    public String saveChanges(@RequestParam(required = false) String filter,
-            @RequestParam double originalPrice, @RequestParam double price, @RequestParam Long id){
+    public String saveChanges(
+            @RequestParam(required = false) String filter,
+            @RequestParam double originalPrice,
+            @RequestParam double price,
+            @RequestParam Long id,
+            @RequestParam int count){
         nameToFind = filter;
-        productService.saveChanges(id, originalPrice, price);
+        productService.saveChanges(id, originalPrice, price, count);
         return "redirect:/main-filter";
     }
     @GetMapping("/product-crud")

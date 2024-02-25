@@ -48,7 +48,9 @@
                     <td sec:authorize="hasAuthority('USER')" th:text = ${product.price}></td>
                     <td th:text = ${product.category}></td>
                     <td th:text = ${product.barCode}></td>
-                    <td th:text = ${product.count}></td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
+                        <input type="number" name="count" th:value="${product.count}">
+                    </td>
                     <td sec:authorize="hasAuthority('ADMIN')">
                         <input type="hidden"  name="filter" placeholder="введите название" th:value="${toFind}">
                         <input type="hidden" name="id" th:value="${product.id}">

@@ -60,7 +60,7 @@ public class OrderController {
             @RequestParam Long orderId
             ){
         orderService.closeOrder(orderId, barcode, counts);
-        return "redirect:/product/order";
+        return "redirect:/product/order#in-process";
     }
 
     @GetMapping("/export/{orderId}")

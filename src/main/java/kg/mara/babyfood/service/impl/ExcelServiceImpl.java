@@ -35,6 +35,7 @@ public class ExcelServiceImpl implements ExcelService {
         // Создаем заголовок таблицы
         Row orderNum = sheet.createRow(0);
         orderNum.createCell(0).setCellValue("№"+order.getOrderId());
+        orderNum.createCell(3).setCellValue(LocalDate.now().toString());
         Row headerRow = sheet.createRow(1);
         headerRow.createCell(0).setCellValue("Наименование товара");
         headerRow.createCell(1).setCellValue("Количество");
