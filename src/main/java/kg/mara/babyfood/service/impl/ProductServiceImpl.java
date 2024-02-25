@@ -25,8 +25,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductEntity> getProducts(
             Pageable paging, String category, String q, List<String> name, List<String> size, List<String> age) {
-        if (category != null && q != null){
-            return productDao.findAllByCountGreaterThanAndCategoryIsLikeAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(0,category,q, q,paging);
+        if (category != null && q  != null){
+            return productDao.findAllByCountGreaterThanAndCategoryIsLikeAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCaseOrCriteriaContainingIgnoreCase(0,category,q, q, q, paging);
         }else  if (category != null){
             if (name != null && size != null){
                 return productDao.findAllByCountGreaterThanAndNameInAndSizeInAndCategoryIsLike(0,name, size, category, paging);
@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
                 return productDao.findAllByCountGreaterThanAndCategoryIsLikeIgnoreCaseOrderByIdAsc(0,paging, category);
             }
         } else if (q != null){
-            return productDao.findAllByCountGreaterThanAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(0,q, q,paging);
+            return productDao.findAllByCountGreaterThanAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCaseOrCriteriaContainingIgnoreCase(0,q, q, q,paging);
         }else {
             return productDao.findAllByCountGreaterThan(0,paging);
         }
@@ -62,6 +62,7 @@ public class ProductServiceImpl implements ProductService {
              pe.setSize(product.getSize());
              pe.setAge(product.getAge());
              pe.setCategory(product.getCategory());
+             pe.setCriteria(product.getCriteria());
          }else {
              pe = productMapper.toEntity(product);
          }

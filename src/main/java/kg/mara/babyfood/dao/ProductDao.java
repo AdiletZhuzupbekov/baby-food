@@ -17,7 +17,7 @@ public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
 //    @Query("select pe from ProductEntity pe where pe.name ?1 or pe.nameRus like  ?2 order by pe.id asc ")
 //    Page<ProductEntity> findAllByNameIsLikeIgnoreCaseOrderByIdAsc(String name, String nameRus, Pageable pr);
 
-    Page<ProductEntity> findAllByCountGreaterThanAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(int i,String name,String nameRus,Pageable pr);
+    Page<ProductEntity> findAllByCountGreaterThanAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCaseOrCriteriaContainingIgnoreCase(int i,String name,String nameRus, String criteria, Pageable pr);
 
 
 
@@ -33,7 +33,7 @@ public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
 
     Page<ProductEntity> findAllByCountGreaterThanAndNameInAndSizeInAndCategoryIsLike(int i,List<String> name, List<String> size, String category, Pageable paging);
 
-    Page<ProductEntity> findAllByCountGreaterThanAndCategoryIsLikeAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCase(int i,String category, String q, String q1, Pageable paging);
+    Page<ProductEntity> findAllByCountGreaterThanAndCategoryIsLikeAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCaseOrCriteriaContainingIgnoreCase(int i,String category, String q, String q1, String q2, Pageable paging);
 
     Page<ProductEntity> findAllByCountGreaterThan(int i, Pageable paging);
 

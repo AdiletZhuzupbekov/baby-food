@@ -97,6 +97,7 @@ public class HomeController {
                              @RequestParam(required = false) String category,
                              @RequestParam(required = false)Integer count,
                              @RequestParam(required = false) Integer plus,
+                             @RequestParam(required = false) String criteria,
                              @RequestParam(value = "image", required = false)MultipartFile multipartFile
                              ) throws IOException {
             String fileName = null;
@@ -131,6 +132,9 @@ public class HomeController {
                 product.setCount(count + plus);
             } else {
                 product.setCount(count);
+            }
+            if (criteria != null){
+                product.setCriteria(criteria);
             }
         productService.saveProducts(product);
         return "redirect:/product-crud";

@@ -18,6 +18,7 @@ public class Product {
     private Double price;
     private String barCode;
     private Integer count;
+    private String criteria;
 
     @Transient
     public String getPhotoImagePath(){
