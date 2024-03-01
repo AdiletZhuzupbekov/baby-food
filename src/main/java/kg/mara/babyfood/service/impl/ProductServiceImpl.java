@@ -63,6 +63,9 @@ public class ProductServiceImpl implements ProductService {
              pe.setAge(product.getAge());
              pe.setCategory(product.getCategory());
              pe.setCriteria(product.getCriteria());
+             if (product.getImage() != null) {
+                 pe.setImage(product.getImage());
+             }
          }else {
              pe = productMapper.toEntity(product);
          }
@@ -129,13 +132,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveChanges(Long id, double originalPrice, double price, int count, String criteria) {
+    public void saveChanges(Long id, double originalPrice, double price, int count, String criteria, String fileName) {
         Optional<ProductEntity> productEntity = productDao.findById(id);
         ProductEntity product = productEntity.get();
         product.setOriginalPrice(originalPrice);
         product.setPrice(price);
         product.setCount(count);
         product.setCriteria(criteria);
+        if (fileName != null) {
+            product.setImage(fileName);
+        }
         productDao.save(product);
     }
 

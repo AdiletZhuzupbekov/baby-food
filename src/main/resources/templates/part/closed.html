@@ -24,11 +24,11 @@
           <td th:text = ${order.orderType}></td>
           <td th:text = ${order.totalPrice}></td>
           <td><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-row="${order}"
-                      data-bs-target="#closed">
+                      th:data-bs-target="${'#modalCustom' + order.orderId}">
             открыть
           </button>
             <!-- Modal -->
-            <div class="modal fade m" id="closed" tabindex="-1" role="dialog"
+            <div class="modal fade m" th:id="modalCustom + ${order.orderId}" tabindex="-1" role="dialog"
                  aria-labelledby="exampleModalLabel" >
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">

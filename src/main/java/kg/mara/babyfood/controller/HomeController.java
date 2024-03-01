@@ -64,9 +64,19 @@ public class HomeController {
             @RequestParam double price,
             @RequestParam Long id,
             @RequestParam int count,
-            @RequestParam String criteria){
+            @RequestParam String criteria,
+            @RequestParam(value = "image", required = false)MultipartFile multipartFile
+    ) throws IOException{
+        String fileName = null;
+        if (multipartFile != null) {
+            fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        }
+        if (fileName != null) {
+            String uploadDir = "product-photos";
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        }
         nameToFind = filter;
-        productService.saveChanges(id, originalPrice, price, count, criteria);
+        productService.saveChanges(id, originalPrice, price, count, criteria, fileName);
         return "redirect:/main-filter";
     }
     @GetMapping("/product-crud")
@@ -106,8 +116,10 @@ public class HomeController {
             if (multipartFile != null) {
                 fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             }
-            String uploadDir = "product-photos";
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            if (!fileName.isEmpty()) {
+                String uploadDir = "product-photos";
+                FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            }
             Product product = new Product();
             if (id != null) {
                 product.setId(id);
@@ -123,7 +135,7 @@ public class HomeController {
             product.setDescription(description);
             product.setName(name);
             product.setNameRus(nameRus);
-            if (fileName != null) {
+            if (!fileName.isEmpty()) {
                 product.setImage(fileName);
             }
             product.setBarCode(barCode);

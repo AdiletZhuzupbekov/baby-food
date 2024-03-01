@@ -29,7 +29,7 @@ public interface ProductService {
 
     Optional<ProductEntity> getProduct(Long id);
 
-    void saveChanges(Long id, double originalPrice, double price, int count, String criteria);
+    void saveChanges(Long id, double originalPrice, double price, int count, String criteria, String fileName);
 
     List<ProductEntity> getProductByFilter(String filter);
 }

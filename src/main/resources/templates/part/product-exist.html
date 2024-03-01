@@ -79,6 +79,14 @@
              th:value="${p.count}">
     </div>
     <div class="col-auto">
+      <label for="description" class="col-form-label" style="width: 283px">Критерия</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control mt-2" style="width: 300px" type="text" id="criteria" name="criteria"
+             placeholder="Критерия"
+             th:value="${p.criteria}">
+    </div>
+    <div class="col-auto">
       <label for="plus" class="col-form-label" style="width: 283px">Добавить:</label>
     </div>
     <div class="col-auto">
@@ -87,6 +95,8 @@
     </div>
 
   </div>
+  <label for="image">Photos: </label>
+  <input type="file" name="image" id="image" accept="image/png, image/jpeg">
   <button class="btn btn-success mt-2" type="submit" id="addToTable">Добавить в список</button>
 </form>
 </div>
