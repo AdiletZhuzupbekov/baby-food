@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
                 return productDao.findAllByCountGreaterThanAndCategoryIsLikeIgnoreCaseOrderByIdAsc(0,paging, category);
             }
         } else if (q != null){
-            return productDao.findAllByCountGreaterThanAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCaseOrCriteriaContainingIgnoreCase(0,q, q, q,paging);
+            return productDao.findAllByCountGreaterThanAndNameContainingIgnoreCaseOrNameRusContainingIgnoreCaseOrCriteriaContainingIgnoreCase(q,paging);
         }else {
             return productDao.findAllByCountGreaterThan(0,paging);
         }
