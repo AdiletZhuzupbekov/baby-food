@@ -24,12 +24,15 @@ public interface ProductService {
     Double getBaseTotal();
 
     Double getSellTotal();
+    void deleteRequest(Long productId);
 
     void deleteProduct(Long productId);
 
     Optional<ProductEntity> getProduct(Long id);
 
-    void saveChanges(Long id, double originalPrice, double price, int count, String criteria, String fileName);
+    void saveChanges(Long id, double originalPrice, double price, int count, String criteria, String fileName, String category);
 
     List<ProductEntity> getProductByFilter(String filter);
+
+    List<ProductEntity> getDeleteRequestedProducts();
 }

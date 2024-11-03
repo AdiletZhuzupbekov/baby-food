@@ -2,15 +2,18 @@ package kg.mara.babyfood.service.impl;
 
 import kg.mara.babyfood.dao.ProductDao;
 import kg.mara.babyfood.entities.ProductEntity;
+import kg.mara.babyfood.enums.ProductStatus;
 import kg.mara.babyfood.mapper.ProductMapper;
 import kg.mara.babyfood.model.Product;
 import kg.mara.babyfood.service.ProductService;
+import kg.mara.babyfood.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductDao productDao;
     private final ProductMapper productMapper;
+    private final UserService userService;
 
     @Override
     public Page<ProductEntity> getProducts(
@@ -63,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
              pe.setAge(product.getAge());
              pe.setCategory(product.getCategory());
              pe.setCriteria(product.getCriteria());
+             pe.setStatus(ProductStatus.ACTIVE);
              if (product.getImage() != null) {
                  pe.setImage(product.getImage());
              }
@@ -84,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductEntity> getProductsForPanel() {
-        return productDao.findAllByOrderByIdDesc();
+        return productDao.findAllByStatusIsNullOrStatusOrderByIdDesc(ProductStatus.ACTIVE);
     }
 
     @Override
@@ -120,6 +125,15 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
     }
+    @Override
+    public void deleteRequest(Long productId) {
+        ProductEntity productEntity = productDao.getById(productId);
+        productEntity.setStatus(ProductStatus.WAITING);
+        productEntity.setDeletedBy(userService.getCurrentUsername());
+        productEntity.setDeletedOn(new Date());
+        productEntity.setBarCode(null);
+        productDao.save(productEntity);
+    }
 
     @Override
     public void deleteProduct(Long productId) {
@@ -132,13 +146,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveChanges(Long id, double originalPrice, double price, int count, String criteria, String fileName) {
+    public void saveChanges(Long id, double originalPrice, double price, int count, String criteria, String fileName, String category) {
         Optional<ProductEntity> productEntity = productDao.findById(id);
         ProductEntity product = productEntity.get();
         product.setOriginalPrice(originalPrice);
         product.setPrice(price);
         product.setCount(count);
         product.setCriteria(criteria);
+        product.setCategory(category);
         if (fileName != null) {
             product.setImage(fileName);
         }
@@ -148,6 +163,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductEntity> getProductByFilter(String filter) {
         return productDao.findAllByNameContainingIgnoreCaseOrderByCategory(filter);
+    }
+
+    @Override
+    public List<ProductEntity> getDeleteRequestedProducts() {
+        return productDao.findAllByStatus(ProductStatus.WAITING);
     }
 
 

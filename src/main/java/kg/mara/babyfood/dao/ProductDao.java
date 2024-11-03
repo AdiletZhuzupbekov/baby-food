@@ -1,6 +1,7 @@
 package kg.mara.babyfood.dao;
 
 import kg.mara.babyfood.entities.ProductEntity;
+import kg.mara.babyfood.enums.ProductStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -52,5 +53,9 @@ public interface ProductDao  extends JpaRepository<ProductEntity, Long> {
     List<ProductEntity> findAllByOrderByCountDesc();
 
     List<ProductEntity> findAllByNameContainingIgnoreCaseOrderByCategory(String filter);
+
+    List<ProductEntity> findAllByStatusIsNullOrStatusOrderByIdDesc(ProductStatus status);
+    List<ProductEntity> findAllByStatus(ProductStatus status);
+
 }
 

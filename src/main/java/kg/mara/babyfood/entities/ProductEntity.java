@@ -1,10 +1,12 @@
 package kg.mara.babyfood.entities;
 
 
+import kg.mara.babyfood.enums.ProductStatus;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data
@@ -24,6 +26,10 @@ public class ProductEntity implements Serializable {
     private String barCode;
     private Integer count;
     private String criteria;
+    private String deletedBy;
+    private Date deletedOn;
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status;
 
     @Transient
     public String getPhotoImagePath(){

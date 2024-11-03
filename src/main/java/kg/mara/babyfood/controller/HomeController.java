@@ -65,6 +65,7 @@ public class HomeController {
             @RequestParam Long id,
             @RequestParam int count,
             @RequestParam String criteria,
+            @RequestParam String category,
             @RequestParam(value = "image", required = false)MultipartFile multipartFile
     ) throws IOException{
         String fileName = null;
@@ -76,7 +77,7 @@ public class HomeController {
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         }
         nameToFind = filter;
-        productService.saveChanges(id, originalPrice, price, count, criteria, fileName);
+        productService.saveChanges(id, originalPrice, price, count, criteria, fileName, category);
         return "redirect:/main-filter";
     }
     @GetMapping("/product-crud")
@@ -162,7 +163,23 @@ public class HomeController {
         List<ProductEntity> products = productService.getProductsForPanel();
         model.addAttribute("product", products);
         model.addAttribute("pageName", "Baby Food");
-        productService.deleteProduct(productId);
+        productService.deleteRequest(productId);
         return "redirect:/";
+    }
+    @PostMapping("/accept-delete")
+    public String accept(@RequestParam Long productId, Model model){
+        productService.deleteProduct(productId);
+        List<ProductEntity> products = productService.getProductsForPanel();
+        model.addAttribute("product", products);
+        model.addAttribute("pageName", "Baby Food");
+        return "redirect:/delete-request";
+    }
+    @GetMapping("/delete-request")
+    public String deleteRequest(Model model){
+        List<ProductEntity> products = productService.getDeleteRequestedProducts();
+
+        model.addAttribute("product", products);
+        model.addAttribute("pageName", "Baby Food");
+        return "delete-order";
     }
 }

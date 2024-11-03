@@ -24,13 +24,12 @@
                 <th scope="col">id</th>
                 <th scope="col">Наименование</th>
                 <th scope="col">Описание</th>
-                <th scope="col">Критерия</th>
-                <th scope="col">Цена приход</th>
-                <th scope="col">Цена продажа</th>
+                <th scope="col" >Цена приход</th>
+                <th scope="col" >Цена продажа</th>
                 <th scope="col">Категория</th>
-                <th scope="col">Баркод</th>
-                <th scope="col">Количество</th>
-
+                <th scope="col" >Количество</th>
+                <th scope="col">Исполнитель</th>
+                <th scope="col" >Дата</th>
             </tr>
             </thead>
             <tbody>
@@ -39,32 +38,17 @@
                     <th th:text = ${product.id}></th>
                     <td th:text = ${product.name}></td>
                     <td th:text = ${product.description}></td>
-                    <td>
-                        <input type="text" name="criteria" th:value="${product.criteria}">
-                    </td>
-                    <td>
-                        <input type="number" name="originalPrice" th:value="${product.originalPrice}">
-                    </td>
-                    <td>
-                        <input type="number" name="price" th:value="${product.price}">
-                    </td>
-                    <td>
-                        <input type="category" name="category" th:value="${product.category}">
-                    </td>
-                    <td th:text = ${product.barCode}></td>
-                    <td>
-                        <input type="number" name="count" th:value="${product.count}">
-                    </td>
-                    <td>
-                        <input type="hidden"  name="filter" placeholder="введите название" th:value="${toFind}">
-                        <input type="hidden" name="id" th:value="${product.id}">
-                        <button type="submit" class="btn btn-success">Сохранить</button>
-                    </td>
+                    <td th:text = ${product.originalPrice}></td>
+                    <td th:text = ${product.price}></td>
+                    <td th:text = ${product.category}></td>
+                    <td th:text = ${product.count}></td>
+                    <td th:text = ${product.deletedBy}></td>
+                    <td th:text = ${product.deletedOn}></td>
                 </form>
                 <td sec:authorize="hasAuthority('ADMIN')">
-                    <form action="/delete-product" method="post">
+                    <form action="/accept-delete" method="post">
                         <input type="hidden" name="productId" th:value="${product.id}">
-                        <button type="submit" class="btn btn-danger">Удалить</button>
+                        <button type="submit" class="btn btn-danger">Подтвердить!!!</button>
                     </form>
                 </td>
             </tr>

@@ -3,8 +3,10 @@ package kg.mara.babyfood.service;
 import kg.mara.babyfood.dao.UserDao;
 import kg.mara.babyfood.entities.User;
 import kg.mara.babyfood.enums.Role;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,5 +43,18 @@ public class UserService implements UserDetailsService {
 
     public User getUserByLogin(String driver) {
         return userRepo.findByUsername(driver);
+    }
+
+    public String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                return ((UserDetails) principal).getUsername();
+            } else {
+                return principal.toString();
+            }
+        }
+        return null;
     }
 }
