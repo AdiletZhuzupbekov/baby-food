@@ -55,7 +55,7 @@
                     <td>
                         <input type="number" name="count" th:value="${product.count}">
                     </td>
-                    <td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
                         <input type="hidden"  name="filter" placeholder="введите название" th:value="${toFind}">
                         <input type="hidden" name="id" th:value="${product.id}">
                         <button type="submit" class="btn btn-success">Сохранить</button>
